@@ -1,10 +1,10 @@
-const firebaseAuth = async () => {
+const firebaseAuth = () => { // sepossível e n for dar trabalho coloca firebaseAuthService
     const auth = firebase.auth();
 
-    const getUid = async () => {
-        await auth.onAuthStateChanged(async (user) => {
+    const getUid = () => {
+        return auth.onAuthStateChanged((user) => {
             if (user) {
-                const currentAuth = auth.currentUser;
+                const currentAuth = auth.currentUser;  // CEZ isso faz sentido? tu recebe o user e n usa?
                 if (currentAuth) {
                     return currentAuth.uid;
                 }
@@ -13,31 +13,19 @@ const firebaseAuth = async () => {
         });
     };
 
-    const createLoginUsingEmailAndPassword = async (email, password) => {
+    const createLoginUsingEmailAndPassword = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                return getUid();
-            }).catch((error) => {
-                throw error;
-            });
+            .then(() => getUid()).catch((error) => error);
     };
 
-    const loginwithEmailAndPassword = async (email, password) => {
+    const loginwithEmailAndPassword = (email, password) => {
         return auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                return getUid();
-            }).catch((error) => {
-                throw error;
-            });
+            .then(() => getUid()).catch((error) => error);
     };
 
-    const signOut = async () => {
+    const signOut = () => {
         return auth.signOut()
-            .then((success) => {
-                return success;
-            }).catch((error) => {
-                throw error;
-            });
+            .then((success) => success).catch((error) => error);
     };
 
     return {

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="bi bi-bag-check navbar__icon"></i></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarTarget"
@@ -47,35 +47,74 @@
         </div>
     </nav>
 
-    <ul class="nav container">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Lojas
-                <i class="bi bi-caret-down-fill"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Produtos
-                <i class="bi bi-caret-down-fill"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Serviços
-                <i class="bi bi-caret-down-fill"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Sobre nós
-                <i class="bi bi-caret-down-fill"></i>
-            </a>
-        </li>
-    </ul>
+    <section class="bg-light mb-3">
+        <ul class="nav container">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Lojas
+                    <i class="bi bi-caret-down-fill"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Produtos
+                    <i class="bi bi-caret-down-fill"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Serviços
+                    <i class="bi bi-caret-down-fill"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Sobre nós
+                    <i class="bi bi-caret-down-fill"></i>
+                </a>
+            </li>
+        </ul>
+    </section>
 
+    <section class="mb-4">
+        <div class="bg-light">
+            <h2 class="container">Principais lojas</h2>
+        </div>
+        <div class="bg-light">
+            <div id="carouselControlsShops" class="carousel" data-bs-ride="carousel">
+                <div class="carousel-inner" id="carouselInnerShops"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselControlsShops"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselControlsShops"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-3">
+        <div class="bg-light">
+            <h2 class="container">Principais produtos</h2>
+        </div>
+        <div class="bg-light">
+            <div id="carouselControlsProducts" class="carousel" data-bs-ride="carousel">
+                <div class="carousel-inner" id="carouselInnerProducts"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselControlsProducts"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselControlsProducts"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </section>
 
 
     <!-- SCRIPTS -->
     <script src="./rsc/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="./rsc/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-    <script src="./src/pages/index/index.js"></script>
+    <script src="./src/pages/home/home.js"></script>
 </body>
 
 </html>
