@@ -14,62 +14,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-bag-check navbar__icon"></i></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarTarget"
-                aria-controls="navBarTarget" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navBarTarget">
-                <form class="d-flex ms-auto me-3">
-                    <input class="form-control" type="search" placeholder="Procurar..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
-                <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-gear-fill navbar__icon"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="index.html">Entrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-person-fill navbar__icon"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div id="navbar-component"></div>   
 
     <section class="bg-light mb-3">
-        <ul class="nav container">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Lojas
-                    <i class="bi bi-caret-down-fill"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Produtos
-                    <i class="bi bi-caret-down-fill"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Serviços
-                    <i class="bi bi-caret-down-fill"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sobre nós
-                    <i class="bi bi-caret-down-fill"></i>
-                </a>
-            </li>
-        </ul>
+        <div id="nav-links-component"></div>
     </section>
 
     <section class="mb-4">
@@ -114,6 +62,7 @@
     <!-- SCRIPTS -->
     <script src="./rsc/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="./rsc/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+    <script src="./src/js/components.js"></script>
     <script src="./src/pages/home/home.js"></script>
 </body>
 
