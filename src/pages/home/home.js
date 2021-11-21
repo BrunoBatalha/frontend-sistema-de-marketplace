@@ -6,26 +6,29 @@ $(document).ready(function () {
         const wrapperItemsProduct = $("#carouselInnerProducts");
         listMock().then(listItems => {
             const allItemsHtml = listItems.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.image, index == 5);
+                return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
             }, "");
             wrapperItemsShop.html(allItemsHtml);
             wrapperItemsProduct.html(allItemsHtml);
             configureCarousels();
         });
 
-        function getHtmlCarouselItem(srcImage, isActive) {
+        function getHtmlCarouselItem(srcImage, isActive, shopId) {
             return `
                 <div class="carousel-item ${isActive ? "active" : ""}">
-                    <div class="carousel-item__img-wrapper">
+                    <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
                         <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
-                    </div>
+                    </a>
                 </div>`;
         }
     }
 
     function listMock() {
         return new Promise(function (resolve) {
-            const list = [1, 2, 3, 4, 5, 7, 8, 9].map((item) => ({ image: `https://via.placeholder.com/300x300.png/09f/fff?text=loja${item}` }))
+            const list = [1, 2, 3, 4, 5, 7, 8, 9].map((item) => ({
+                image: `https://via.placeholder.com/300x300.png/09f/fff?text=loja${item}`,
+                id: `id${item}`
+            }))
             resolve(list);
         })
     }
