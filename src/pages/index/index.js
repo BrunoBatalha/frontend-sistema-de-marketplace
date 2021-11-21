@@ -1,3 +1,5 @@
+import firebaseAuth from "../../firebase/auth.js";
+
 $(document).ready(function () {
   $("#checkboxShowHidePassword").on("change", onChangeCheckboxPassword);
 
@@ -10,21 +12,23 @@ $(document).ready(function () {
 
   $("#form-login").on("submit", onSubmitFormLogin);
 
-  function onSubmitFormLogin(event) {
+  async function onSubmitFormLogin(event) {
     event.preventDefault();
 
     const inputs = {
       email: $("#inputEmail").val(),
       password: $("#inputPassword").val(),
     };
-    login(inputs.email, inputs.password).then(function () {
-      console.log("Logado");
-    });
+
+    const response = await login(inputs.email, inputs.password);
+    if (response) {
+      setTimeout(() => {
+        window.location.replace("./home.html");
+      }, timeout);
+    }
   }
 
-  function login(email, password) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, 1000);
-    });
+  async function login(email, password) {
+    return firebaseAuth.loginWithEmailAndPassword(email, password);
   }
 });

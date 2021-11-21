@@ -1,4 +1,4 @@
-const firebaseAuth = async () => {
+export default (() => {
     const auth = firebase.auth();
 
     const getUid = async () => {
@@ -15,16 +15,17 @@ const firebaseAuth = async () => {
 
     const createLoginUsingEmailAndPassword = async (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
-            .then(() => {
+            .then(async () => {
                 return getUid();
             }).catch((error) => {
                 throw error;
             });
     };
 
-    const loginwithEmailAndPassword = async (email, password) => {
+    const loginWithEmailAndPassword = async (email, password) => {
+        debugger
         return auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
+            .then(async () => {
                 return getUid();
             }).catch((error) => {
                 throw error;
@@ -43,7 +44,7 @@ const firebaseAuth = async () => {
     return {
         getUid,
         createLoginUsingEmailAndPassword,
-        loginwithEmailAndPassword,
+        loginWithEmailAndPassword,
         signOut
     };
-}
+})()
