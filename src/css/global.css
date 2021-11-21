@@ -1,3 +1,11 @@
-html{
+/* html{
     font-size: 62.5%;
+}
+.navbar__icon {
+    font-size: 1.6rem;
+  } */
+
+/* APAGAR */
+.bg-light {
+  background-color: red !important;
 }
