@@ -1,5 +1,3 @@
-import firebaseAuth from "../../firebase/auth.js";
-
 $(document).ready(function () {
   $("#checkboxShowHidePassword").on("change", onChangeCheckboxPassword);
 
@@ -20,15 +18,30 @@ $(document).ready(function () {
       password: $("#inputPassword").val(),
     };
 
-    const response = await login(inputs.email, inputs.password);
-    if (response) {
-      setTimeout(() => {
-        window.location.replace("./home.html");
-      }, timeout);
+    try {
+      await login(inputs.email, inputs.password);
+      setLocalStorage()
+      await showToast("Login realizado com sucesso! Redirecionando...", "success")
+      setTimeout(function () {
+        window.location.replace("./home.html")
+      }, 3000)
+    }catch(err) {
+      if (err && err.code && err.message) {
+        showToast(err.message)
+      }
     }
   }
 
   async function login(email, password) {
     return firebaseAuth.loginWithEmailAndPassword(email, password);
+  }
+
+  async function setLocalStorage() {
+    const userUid = await firebaseAuth.getUid()
+    localStorage.setItem('userUid', userUid) 
+    const ref = `users/${userUid}`
+    
+    const data = await firebaseDatabase.readData(ref)
+    localStorage.setItem('userData', JSON.stringify(data)) 
   }
 });

@@ -1,32 +1,31 @@
-export default (() => {
-    const database = firebase.database().ref();
+const firebaseDatabase = (() => {
+    const database = firebase.database();
 
-    const databaseRead = async (path = "/") => {
-        var firebaseChild = database.child(path);
-        return firebaseChild.on('value', async (snapshot) => {
-            return snapshot.val();
+    const readData = async (ref = "/") => {
+        const value = await new Promise(function (resolve, reject) {
+            database.ref(ref).on('value', (snapshot) => {
+                resolve(snapshot.val());
+            });
         });
+        return value;
     };
 
-    const databaseSave = async (path = "/", data = {}) => {
-        const firebaseChild = database.child(path);
-        await firebaseChild.set(data);
+    const writeData = async (data = {}, ref = "/") => {
+        return database.ref(ref).set(data);
     };
 
-    const databaseUpdate = async (path = "/", data = {}) => {
-        const firebaseChild = database.child(path);
-        await firebaseChild.update(data);
+    const updateData = async (data = {}, ref = "/") => {
+        return database.ref(ref).update(null);
     };
 
-    const databaseDelete = async (path = "/") => {
-        const firebaseChild = database.child(path);
-        await firebaseChild.delete();
+    const deleteData = async (ref = "/") => {
+        return database.ref(ref).delete();
     };
 
     return {
-        databaseRead,
-        databaseSave,
-        databaseUpdate,
-        databaseDelete
+        readData,
+        writeData,
+        updateData,
+        deleteData
     };
 })()

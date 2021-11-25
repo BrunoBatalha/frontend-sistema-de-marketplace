@@ -1,31 +1,24 @@
-export default (() => {
+const firebaseAuth = (() => {
     const auth = firebase.auth();
 
-    const getUid = () => {
-        return auth.onAuthStateChanged((user) => {
-            if (user) {
-                const currentAuth = auth.currentUser;  // CEZ isso faz sentido? tu recebe o user e n usa?
-                if (currentAuth) {
-                    return currentAuth.uid;
-                }
-            }
-            return null;
-        });
+    const getUid = async () => {
+        const user = auth.currentUser;
+        if (user !== null) 
+            return user.uid;
+        else 
+            return null
     };
 
-    const createLoginUsingEmailAndPassword = (email, password) => {
+    const createLoginUsingEmailAndPassword = async (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
-            .then(() => getUid()).catch((error) => error);
     };
 
-    const loginWithEmailAndPassword = (email, password) => {
+    const loginWithEmailAndPassword = async (email, password) => {
         return auth.signInWithEmailAndPassword(email, password)
-            .then(() => getUid()).catch((error) => error);
     };
 
-    const signOut = () => {
+    const signOut = async () => {
         return auth.signOut()
-            .then((success) => success).catch((error) => error);
     };
 
     return {
