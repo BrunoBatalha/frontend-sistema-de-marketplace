@@ -4,7 +4,6 @@ $(document).ready(function () {
   function onChangeCheckboxPassword(event) {
     const checkbox = event.target;
     const isChecked = $(checkbox).is(":checked");
-    console.log(isChecked);
     $("#inputPassword").attr("type", isChecked ? "text" : "password");
   }
 
@@ -12,6 +11,7 @@ $(document).ready(function () {
 
   async function onSubmitFormLogin(event) {
     event.preventDefault();
+    UTIL.toggleDisableForm();
 
     const inputs = {
       email: $("#inputEmail").val(),
@@ -20,15 +20,17 @@ $(document).ready(function () {
 
     try {
       await login(inputs.email, inputs.password);
-      setLocalStorage()
-      await util.showToast("Login realizado com sucesso! Redirecionando...", "success")
-      setTimeout(function () {
-        window.location.replace("./home.html")
-      }, 3000)
-    }catch(err) {
+      setLocalStorage();
+      await UTIL.showToast(
+        "Login realizado com sucesso! Redirecionando...",
+        ENUMERATIONS.COLORS.SUCCESS
+      );
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME)
+    } catch (err) {
       if (err && err.code && err.message) {
-        util.showToast(err.message)
+        UTIL.showToast(err.message);
       }
+      UTIL.toggleDisableForm()
     }
   }
 
@@ -37,11 +39,15 @@ $(document).ready(function () {
   }
 
   async function setLocalStorage() {
-    const userUid = await firebaseAuth.getUid()
-    localStorage.setItem('userUid', userUid) 
-    const ref = `users/${userUid}`
-    
-    const data = await firebaseDatabase.readData(ref)
-    localStorage.setItem('userData', JSON.stringify(data)) 
+    const userUid = await firebaseAuth.getUid();
+    localStorage.setItem("userUid", userUid);
+    const ref = `users/${userUid}`;
+
+    const data = await firebaseDatabase.readData(ref);
+    localStorage.setItem("userData", JSON.stringify(data));
   }
+
+
+
+
 });

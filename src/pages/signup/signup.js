@@ -11,6 +11,7 @@ $(document).ready(function () {
 
   async function onSubmitFormLogin(event) {
     event.preventDefault();
+    UTIL.toggleDisableForm();
 
     const inputs = {
       name: $("#inputName").val(),
@@ -19,23 +20,22 @@ $(document).ready(function () {
       confirmPassword: $("#inputConfirmPassword").val(),
     };
 
-    if (inputs.password != inputs.confirmPassword) {
-      util.showToast("Senhas não coincidem!")
-      return;
-    }
-    
     try {
+      validatePasswords(inputs.password, inputs.confirmPassword);
       await signup(inputs.email, inputs.password);
       await insertUserDatabase();
       await firebaseAuth.signOut();
-      await util.showToast("Cadastro realizado com sucesso! Redirecionando...", "success")
-      setTimeout(function () {
-        window.location.replace("./index.html")
-      }, 5000)
-    }catch(err) {
-      if (err && err.code && err.message) {
-        util.showToast(err.message)
-      }
+      await UTIL.showToast("Cadastro realizado com sucesso! Redirecionando...", "success")
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN)
+    } catch (err) {
+      UTIL.showToast(err.message ?? err)
+      UTIL.toggleDisableForm();
+    }
+  }
+
+  function validatePasswords(password, confirmPassword) {
+    if (password != confirmPassword) {
+      throw 'Senhas não coincidem!';
     }
   }
 
