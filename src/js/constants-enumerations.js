@@ -10,6 +10,7 @@ const CONSTANTS = {
   },
   URL_PARAMS: {
     SHOP_ID: "shopId",
+    CATEGORY_ID: "categoryId"
   },
   SITE: {
     NAME: "Planet Marketplace",
