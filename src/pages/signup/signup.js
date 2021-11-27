@@ -20,7 +20,7 @@ $(document).ready(function () {
     };
 
     if (inputs.password != inputs.confirmPassword) {
-      showToast("Senhas não coincidem!")
+      util.showToast("Senhas não coincidem!")
       return;
     }
     
@@ -28,13 +28,13 @@ $(document).ready(function () {
       await signup(inputs.email, inputs.password);
       await insertUserDatabase();
       await firebaseAuth.signOut();
-      await showToast("Cadastro realizado com sucesso! Redirecionando...", "success")
+      await util.showToast("Cadastro realizado com sucesso! Redirecionando...", "success")
       setTimeout(function () {
         window.location.replace("./index.html")
       }, 5000)
     }catch(err) {
       if (err && err.code && err.message) {
-        showToast(err.message)
+        util.showToast(err.message)
       }
     }
   }

@@ -21,13 +21,13 @@ $(document).ready(function () {
     try {
       await login(inputs.email, inputs.password);
       setLocalStorage()
-      await showToast("Login realizado com sucesso! Redirecionando...", "success")
+      await util.showToast("Login realizado com sucesso! Redirecionando...", "success")
       setTimeout(function () {
         window.location.replace("./home.html")
       }, 3000)
     }catch(err) {
       if (err && err.code && err.message) {
-        showToast(err.message)
+        util.showToast(err.message)
       }
     }
   }

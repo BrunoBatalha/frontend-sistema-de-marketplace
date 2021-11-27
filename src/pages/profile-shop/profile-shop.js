@@ -7,12 +7,12 @@ $(document).ready(function () {
         const wrapperItemsOffered = $('#shop-items-offered');
         loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID)).then(shop => {
             const htmlDetails =
-                dom.getHtmlDetail(CONSTANTS.LABELS.ADDRESS, shop.address) +
-                dom.getHtmlDetail(CONSTANTS.LABELS.OWNER, shop.owner) +
-                dom.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.typesOfProducts);
+                util.domRender.getHtmlDetail(CONSTANTS.LABELS.ADDRESS, shop.address) +
+                util.domRender.getHtmlDetail(CONSTANTS.LABELS.OWNER, shop.owner) +
+                util.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.typesOfProducts);
             wrapperDetails.html(htmlDetails);
-            wrapperBanner.html(dom.getHtmlBanner(shop.image))
-            wrapperItemsOffered.html(dom.getHtmlItemsOffered(shop.items));
+            wrapperBanner.html(domRenderLocal.getHtmlBanner(shop.image))
+            wrapperItemsOffered.html(domRenderLocal.getHtmlItemsOffered(shop.items));
         })
     }
 
@@ -55,13 +55,7 @@ $(document).ready(function () {
         return params.get(param);
     }
 
-    const dom = {
-        getHtmlDetail: function (titleDetail, text) {
-            return `
-                <span class="profile-shop__text-details--bold">${titleDetail}:</span>
-                <p class="profile-shop__text-details">${text}</p>
-            `;
-        },
+    const domRenderLocal = {
         getHtmlBanner: function (imageUrl) {
             return `
                 <img  src="${imageUrl}" class="w-100 mb-2">
