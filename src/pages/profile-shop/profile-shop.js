@@ -7,9 +7,9 @@ $(document).ready(function () {
         const wrapperItemsOffered = $('#shop-items-offered');
         loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID)).then(shop => {
             const htmlDetails =
-                util.domRender.getHtmlDetail(CONSTANTS.LABELS.ADDRESS, shop.address) +
-                util.domRender.getHtmlDetail(CONSTANTS.LABELS.OWNER, shop.owner) +
-                util.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.typesOfProducts);
+                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.ADDRESS, shop.address) +
+                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.OWNER, shop.owner) +
+                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.typesOfProducts);
             wrapperDetails.html(htmlDetails);
             wrapperBanner.html(domRenderLocal.getHtmlBanner(shop.image))
             wrapperItemsOffered.html(domRenderLocal.getHtmlItemsOffered(shop.items));
