@@ -19,13 +19,14 @@ const CONSTANTS = {
       PROFILE_SHOP: "Perfil da loja",
       SIGNUP: "Cadastre-se",
       HOME: "Início",
+      LOGIN: "Entrar"
     },
     PAGES: {
       MY_PROFILE: "profile-user",
       PROFILE_SHOP: "profile-shop",
       SIGNUP: "signup",
-      HOME: "home",
-      LOGIN: "index",
+      HOME: "index",
+      LOGIN: "login",
     },
   },
 };
@@ -37,6 +38,7 @@ const ENUMERATIONS = {
       "profile-shop": CONSTANTS.SITE.TITLES.PROFILE_SHOP,
       home: CONSTANTS.SITE.TITLES.HOME,
       signup: CONSTANTS.SITE.TITLES.SIGNUP,
+      login: CONSTANTS.SITE.TITLES.LOGIN,
     },
   },
   COLORS: {

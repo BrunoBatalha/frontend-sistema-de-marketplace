@@ -58,7 +58,7 @@ $(document).ready(function () {
                             </a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link" href="index.html">Entrar</a>
+                            <a class="nav-link" href="${CONSTANTS.SITE.PAGES.LOGIN}.html">Entrar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="profile-user.html">
