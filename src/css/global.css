@@ -5,10 +5,7 @@
     font-size: 1.6rem;
   } */
 
-/* APAGAR */
-.bg-light {
-  background-color: red !important;
-}
+
 
 a {
   text-decoration: none;
@@ -24,7 +21,16 @@ a:hover {
 }
 
 .md-toast-success {
-    background-color: rgb(55, 228, 55);
-    color: white;
-    font-size: 16px;
+  background-color: rgb(55, 228, 55);
+  color: white;
+  font-size: 16px;
+}
+
+.details__text-details {
+  font-size: 1.2rem;
+}
+
+.details__title-details {
+  font-size: 1.2rem;
+  font-weight: 500;
 }
