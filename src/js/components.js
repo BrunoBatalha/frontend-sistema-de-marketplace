@@ -9,13 +9,13 @@ $(document).ready(function () {
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Imóveis</a></li>
-                        <li><a class="dropdown-item" href="#">Auto peças</a></li>
-                        <li><a class="dropdown-item" href="#">Eletrônicos e celulares</a></li>
-                        <li><a class="dropdown-item" href="#">Moda e beleza</a></li>
-                        <li><a class="dropdown-item" href="#">Animais de estimação</a></li>
-                        <li><a class="dropdown-item" href="#">Serviços</a></li>
-                        <li><a class="dropdown-item" href="#">Artigos infatis</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Imóveis</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Auto peças</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Eletrônicos e celulares</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Moda e beleza</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Animais de estimação</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Serviços</a></li>
+                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?categoryId=1">Artigos infatis</a></li>
                     </ul>
                 </div>
             </li>
@@ -69,5 +69,5 @@ $(document).ready(function () {
                 </div>
             </div>
         </nav>
-    `);
+    `);    
 })
