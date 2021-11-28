@@ -34,3 +34,12 @@ a:hover {
   font-size: 1.2rem;
   font-weight: 500;
 }
+
+.form-signup {
+  margin-top: 10vh;
+}
+
+.form-signup__title{
+  text-align: center;
+  font-size: 1.5rem;
+} 

@@ -16,10 +16,10 @@ const UTIL = {
     }, timeout);
   },
 
-  redirectTo: function (page) {
+  redirectTo: function (page, timeout = 3000) {
     setTimeout(function () {
       window.location.assign(`${page}.html`);
-    }, 3000)
+    }, timeout)
   },
 
   toggleDisableForm: function (idForm) {

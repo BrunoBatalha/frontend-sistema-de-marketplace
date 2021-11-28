@@ -2,6 +2,7 @@ const CONSTANTS = {
   LABELS: {
     ADDRESS: "Endereço",
     OWNER: "Proprietário",
+    NAME: "Nome",
     EMAIL: "Email",
     TELEPHONE: "Telefone",
     TYPES_OF_PRODUCTS: "Tipos de produtos",
@@ -19,7 +20,8 @@ const CONSTANTS = {
       PROFILE_SHOP: "Perfil da loja",
       SIGNUP: "Cadastre-se",
       HOME: "Início",
-      LOGIN: "Entrar"
+      LOGIN: "Entrar",
+      EDIT_USER: "Editar minhas informações"
     },
     PAGES: {
       MY_PROFILE: "profile-user",
@@ -27,6 +29,7 @@ const CONSTANTS = {
       SIGNUP: "signup",
       HOME: "index",
       LOGIN: "login",
+      EDIT_USER: "edit-user",
     },
   },
 };
@@ -39,6 +42,7 @@ const ENUMERATIONS = {
       home: CONSTANTS.SITE.TITLES.HOME,
       signup: CONSTANTS.SITE.TITLES.SIGNUP,
       login: CONSTANTS.SITE.TITLES.LOGIN,
+      "edit-user": CONSTANTS.SITE.TITLES.EDIT_USER,
     },
   },
   COLORS: {

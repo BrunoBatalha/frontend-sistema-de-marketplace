@@ -13,13 +13,13 @@ $(document).ready(function () {
     event.preventDefault();
     UTIL.toggleDisableForm();
 
-    const inputs = {
+    const inputValues = {
       email: $("#inputEmail").val(),
       password: $("#inputPassword").val(),
     };
 
     try {
-      await login(inputs.email, inputs.password);
+      await login(inputValues.email, inputValues.password);
       setLocalStorage();
       await UTIL.showToast(
         "Login realizado com sucesso! Redirecionando...",

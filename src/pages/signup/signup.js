@@ -13,7 +13,7 @@ $(document).ready(function () {
     event.preventDefault();
     UTIL.toggleDisableForm();
 
-    const inputs = {
+    const inputValues = {
       name: $("#inputName").val(),
       email: $("#inputEmail").val(),
       password: $("#inputPassword").val(),
@@ -21,11 +21,11 @@ $(document).ready(function () {
     };
 
     try {
-      validatePasswords(inputs.password, inputs.confirmPassword);
-      await signup(inputs.email, inputs.password);
+      validatePasswords(inputValues.password, inputValues.confirmPassword);
+      await signup(inputValues.email, inputValues.password);
       await insertUserDatabase();
       await firebaseAuth.signOut();
-      await UTIL.showToast("Cadastro realizado com sucesso! Redirecionando...", "success")
+      await UTIL.showToast("Cadastro realizado com sucesso! Redirecionando...", ENUMERATIONS.COLORS.SUCCESS)
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN)
     } catch (err) {
       UTIL.showToast(err.message ?? err)
