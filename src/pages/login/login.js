@@ -46,8 +46,4 @@ $(document).ready(function () {
     const data = await firebaseDatabase.readData(ref);
     localStorage.setItem("userData", JSON.stringify(data));
   }
-
-
-
-
 });

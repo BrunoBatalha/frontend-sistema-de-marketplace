@@ -12,24 +12,23 @@ $(document).ready(async function () {
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.EMAIL, user.email);
       wrapperDetails.html(htmlDetails);
     } catch (error) {
-      console.error(error);
-      await UTIL.showToast("Falha ao carregar informações.")
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+      await UTIL.showToast(error);
     }
   }
 
-  function configureButtons(){
-    $('#btn-edit-informations').on('click',function(){
-      UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0 )
-    })
+  function configureButtons() {
+    $('#btn-edit-informations').on('click', function () {
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
+    });
   }
 
   function loadMock() {
-    return new Promise(function (resolve) {
-      resolve({
-        name: "1Jayce Talis",
-        email: "jayceTalisOSenhorDoProgresso@Pilltover.com",
-        telephone: "(92) 92492-2189",
-      });
-    });
+    const userData = localStorage.getItem("userData");
+    const userUid = localStorage.getItem("userUid");
+    if (userData && userUid) {
+      return JSON.parse(userData);
+    }
+    throw new Error("Falha ao carregar perfil");
   }
 });
