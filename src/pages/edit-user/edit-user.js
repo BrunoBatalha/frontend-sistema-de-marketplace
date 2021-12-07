@@ -6,7 +6,7 @@ $(document).ready(async function () {
 
     async function fillFormUser() {
         try {
-            const user = await loadMock();
+            const user = await loadUserData();
             inputs.name.val(user.name)
             inputs.email.val(user.email)
             inputs.telephone.val(user.telephone)
@@ -39,13 +39,7 @@ $(document).ready(async function () {
         };
     }
 
-    function loadMock() {
-        return new Promise(function (resolve) {
-            resolve({
-                name: "Jayce Talis",
-                email: "jayceTalisOSenhorDoProgresso@Pilltover.com",
-                telephone: "(92) 92492-2189",
-            });
-        });
+    function loadUserData() {
+        return firebaseDatabase.loadUserData()
     }
 });

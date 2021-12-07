@@ -5,7 +5,7 @@ $(document).ready(async function () {
   async function fillProfileUser() {
     const wrapperDetails = $("#user-details");
     try {
-      const user = await loadMock();
+      const user = await loadUserData();
       const htmlDetails =
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.NAME, user.name) +
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TELEPHONE, user.telephone) +
@@ -23,12 +23,7 @@ $(document).ready(async function () {
     });
   }
 
-  function loadMock() {
-    const userData = localStorage.getItem("userData");
-    const userUid = localStorage.getItem("userUid");
-    if (userData && userUid) {
-      return JSON.parse(userData);
-    }
-    throw new Error("Falha ao carregar perfil");
+  function loadUserData() {
+    return firebaseDatabase.loadUserData()
   }
 });

@@ -22,10 +22,20 @@ const firebaseDatabase = (() => {
         return database.ref(ref).delete();
     };
 
+    const loadUserData = () => {
+        const userData = localStorage.getItem("userData");
+        const userUid = localStorage.getItem("userUid");
+        if (userData && userUid) {
+            return JSON.parse(userData);
+        }
+        throw new Error("Falha ao carregar perfil");
+    }
+
     return {
         readData,
         writeData,
         updateData,
-        deleteData
+        deleteData,
+        loadUserData
     };
 })()
