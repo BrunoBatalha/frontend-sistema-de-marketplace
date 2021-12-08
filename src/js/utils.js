@@ -19,7 +19,7 @@ const UTIL = {
   redirectTo: function (page, timeout = 3000) {
     setTimeout(function () {
       window.location.assign(`${page}.html`);
-    }, timeout)
+    }, timeout);
   },
 
   toggleDisableForm: function (idForm) {
@@ -29,6 +29,15 @@ const UTIL = {
       return;
     }
     $("form :input").prop("disabled", !isDisabled);
+  },
+
+  errorHandler(error) {
+    if (error && error.code) {
+      return MESSAGES.FIREBASE[error.code]
+        ?? MESSAGES.GLOBAL[error.code]
+        ?? MESSAGES.GLOBAL.UNKNOWN_ERROR;
+    }
+    return error ?? MESSAGES.GLOBAL.UNKNOWN_ERROR;
   },
 
   domRender: {

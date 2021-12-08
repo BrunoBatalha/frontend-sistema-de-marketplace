@@ -50,3 +50,23 @@ const ENUMERATIONS = {
     ERROR: 'error'
   }
 };
+
+const MESSAGES = {
+  FIREBASE: {
+    "auth/too-many-requests": "Muitas tentativas de acesso. Tente novamente mais tarde",
+    "auth/email-already-in-use": "Email já está em uso",
+    "auth/user-not-found": "Cadastro não encontrado",
+    "auth/weak-password": "A senha deve conter ao menos 6 caracteres",
+    "auth/wrong-password": "Email ou Senha inválido"
+  },
+  GLOBAL: {
+    SUCCESSFULLY_LOGIN: "Login realizado com sucesso",
+    SUCCESSFULLY_SIGN_UP: "Cadastro realizado com sucesso",
+    SUCCESSFULLY_UPDATE: "Informações alteradas com sucesso",
+    ERROR_ON_LOAD_INFORMATIONS: "Falha ao carregar informações",
+    UNKNOWN_ERROR: "Erro desconhecido",
+    PASSWORDS_NOT_MATCH: "Senhas não coincidem",
+    USER_NOT_LOGGED: "Erro ao acessar o conteúdo: usuário não logado",
+    DATABASE_FAILED: "Erro inesperado com o servidor de dados"
+  }
+}

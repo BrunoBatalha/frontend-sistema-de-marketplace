@@ -12,7 +12,7 @@ $(document).ready(async function () {
             inputs.telephone.val(user.telephone)
         } catch (error) {
             console.error(error);
-            await UTIL.showToast("Falha ao carregar informações.")
+            await UTIL.showToast(MESSAGES.GLOBAL.ERROR_ON_LOAD_INFORMATIONS)
         }
     }
     function configureForm() {
@@ -20,7 +20,7 @@ $(document).ready(async function () {
             event.preventDefault();
             try {
                 await editUserDatabase();
-                await UTIL.showToast("Informações alteradas com sucesso! Redirecionando...", ENUMERATIONS.COLORS.SUCCESS)
+                await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_UPDATE, ENUMERATIONS.COLORS.SUCCESS)
                 UTIL.redirectTo(CONSTANTS.SITE.PAGES.MY_PROFILE)
             } catch (err) {
                 UTIL.showToast(err.message ?? err)

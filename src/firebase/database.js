@@ -2,12 +2,16 @@ const firebaseDatabase = (() => {
     const database = firebase.database();
 
     const readData = async (ref = "/") => {
-        const value = await new Promise(function (resolve, reject) {
+        return await new Promise(function (resolve, reject) {
             database.ref(ref).on('value', (snapshot) => {
-                resolve(snapshot.val());
+                if (snapshot.val) {
+                    resolve(snapshot.val());
+                }
+                resolve(snapshot);
+            }, error => {
+                reject(error);
             });
         });
-        return value;
     };
 
     const writeData = async (data = {}, ref = "/") => {
@@ -29,7 +33,7 @@ const firebaseDatabase = (() => {
             return JSON.parse(userData);
         }
         throw new Error("Falha ao carregar perfil");
-    }
+    };
 
     return {
         readData,

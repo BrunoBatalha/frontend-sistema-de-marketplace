@@ -20,30 +20,36 @@ $(document).ready(function () {
 
     try {
       await login(inputValues.email, inputValues.password);
-      setLocalStorage();
-      await UTIL.showToast(
-        "Login realizado com sucesso! Redirecionando...",
-        ENUMERATIONS.COLORS.SUCCESS
-      );
-      UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME)
-    } catch (err) {
-      if (err && err.code && err.message) {
-        UTIL.showToast(err.message);
-      }
-      UTIL.toggleDisableForm()
+      await setLocalStorage();
+
+      await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_LOGIN, ENUMERATIONS.COLORS.SUCCESS);
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+    } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
+      UTIL.toggleDisableForm();
     }
   }
 
   async function login(email, password) {
-    return firebaseAuth.loginWithEmailAndPassword(email, password);
+    try {
+      return await firebaseAuth.loginWithEmailAndPassword(email, password);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async function setLocalStorage() {
-    const userUid = await firebaseAuth.getUid();
-    localStorage.setItem("userUid", userUid);
-    const ref = `users/${userUid}`;
-
-    const data = await firebaseDatabase.readData(ref);
-    localStorage.setItem("userData", JSON.stringify(data));
+    try {
+      const userUid = await firebaseAuth.getUid();
+      localStorage.setItem("userUid", userUid);
+      const ref = `users/${userUid}`;
+      const data = await firebaseDatabase.readData(ref);
+      if (!data) {
+        throw { code: "DATABASE_FAILED" };
+      }
+      localStorage.setItem("userData", JSON.stringify(data));
+    } catch (error) {
+      throw error;
+    }
   }
 });

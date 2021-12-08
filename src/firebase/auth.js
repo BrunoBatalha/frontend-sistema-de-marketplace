@@ -2,23 +2,27 @@ const firebaseAuth = (() => {
     const auth = firebase.auth();
 
     const getUid = async () => {
-        const user = auth.currentUser;
-        if (user !== null) 
-            return user.uid;
-        else 
-            return null
+        try {
+            const user = auth.currentUser;
+            if (user !== null){
+                return user.uid;
+            }
+            throw {code: "USER_NOT_LOGGED"};
+        }catch(error) {
+            throw error
+        }
     };
 
     const createLoginUsingEmailAndPassword = async (email, password) => {
-        return auth.createUserWithEmailAndPassword(email, password)
+        return await auth.createUserWithEmailAndPassword(email, password);
     };
 
     const loginWithEmailAndPassword = async (email, password) => {
-        return auth.signInWithEmailAndPassword(email, password)
+        return await auth.signInWithEmailAndPassword(email, password);
     };
 
     const signOut = async () => {
-        return auth.signOut()
+        return await auth.signOut();
     };
 
     return {

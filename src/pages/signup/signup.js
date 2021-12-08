@@ -22,39 +22,49 @@ $(document).ready(function () {
 
     try {
       validatePasswords(inputValues.password, inputValues.confirmPassword);
+     
       await signup(inputValues.email, inputValues.password);
       await insertUserDatabase();
       await firebaseAuth.signOut();
-      await UTIL.showToast("Cadastro realizado com sucesso! Redirecionando...", ENUMERATIONS.COLORS.SUCCESS)
-      UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN)
-    } catch (err) {
-      UTIL.showToast(err.message ?? err)
+      
+      await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_SIGN_UP, ENUMERATIONS.COLORS.SUCCESS);
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
+    } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
       UTIL.toggleDisableForm();
     }
   }
 
   function validatePasswords(password, confirmPassword) {
     if (password != confirmPassword) {
-      throw 'Senhas não coincidem!';
+      throw { code: "PASSWORDS_NOT_MATCH" };
     }
   }
 
   async function signup(email, password) {
-    return firebaseAuth.createLoginUsingEmailAndPassword(email, password);
+    try {
+      return await firebaseAuth.createLoginUsingEmailAndPassword(email, password);
+    } catch (error) {
+      throw error;
+    }
   }
 
   async function insertUserDatabase() {
-    const data = {
-      name: $("#inputName").val(),
-      email: $("#inputEmail").val(),
-      phone: "",
-      address: {},
-      images: {},
-      points: 0
-    };
+    try {
+      const data = {
+        name: $("#inputName").val(),
+        email: $("#inputEmail").val(),
+        phone: "",
+        address: {},
+        images: {},
+        points: 0
+      };
 
-    const userUid = await firebaseAuth.getUid();
-    const ref = `users/${userUid}`
-    await firebaseDatabase.writeData(data, ref)
+      const userUid = await firebaseAuth.getUid();
+      const ref = `users/${userUid}`;
+      await firebaseDatabase.writeData(data, ref);
+    } catch (error) {
+      throw error;
+    }
   }
 });
