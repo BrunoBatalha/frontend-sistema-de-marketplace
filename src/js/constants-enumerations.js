@@ -67,7 +67,7 @@ const MESSAGES = {
     UNKNOWN_ERROR: "Erro desconhecido",
     PASSWORDS_NOT_MATCH: "Senhas não coincidem",
     USER_NOT_LOGGED: "Erro ao acessar o conteúdo: usuário não logado",
-    DATABASE_FAILED: "Erro inesperado com o servidor de dados",
-    USER_ALREADY_LOGGED: "Usuário já logado!"
+    USER_ALREADY_LOGGED: "Usuário já logado!",
+    ERROR_ON_LOAD_DATA: "Erro inesperado ao carregar dados"
   }
 };

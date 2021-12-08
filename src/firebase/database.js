@@ -19,7 +19,7 @@ const firebaseDatabase = (() => {
     };
 
     const updateData = async (data = {}, ref = "/") => {
-        return database.ref(ref).update(null);
+        return database.ref(ref).update(data);
     };
 
     const deleteData = async (ref = "/") => {
@@ -27,12 +27,16 @@ const firebaseDatabase = (() => {
     };
 
     const loadUserData = () => {
-        const userData = localStorage.getItem("userData");
         const userUid = localStorage.getItem("userUid");
-        if (userData && userUid) {
-            return JSON.parse(userData);
+        if (!userUid) {
+            throw { code: "USER_NOT_LOGGED" };
         }
-        throw new Error("Falha ao carregar perfil");
+
+        const userData = localStorage.getItem("userData");
+        if (!userData) {
+            throw { code: "ERROR_ON_LOAD_DATA" };
+        }
+        return JSON.parse(userData);
     };
 
     return {

@@ -12,8 +12,8 @@ $(document).ready(async function () {
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.EMAIL, user.email);
       wrapperDetails.html(htmlDetails);
     } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
-      await UTIL.showToast(error);
     }
   }
 
@@ -23,7 +23,11 @@ $(document).ready(async function () {
     });
   }
 
-  function loadUserData() {
-    return firebaseDatabase.loadUserData()
+  async function loadUserData() {
+    try {
+      return await firebaseDatabase.loadUserData();
+    } catch (error) {
+      throw error;
+    }
   }
 });

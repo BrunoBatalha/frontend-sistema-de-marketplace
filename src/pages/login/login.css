@@ -1,21 +1,16 @@
 .form-login {
     margin-top: 10vh;
-  }
-  
-  /* .form-login__header{
-      text-align: center;
-  }
-  */
-  .form-login__title{
-      text-align: center;
-      font-size: 1.5rem;
-  } 
-  
-  .form-login__icon{
-      font-size: 5rem;
-  }
-  .olho{
-      position: absolute;
-      right: 0;
-      top: 0;
-  }
+}
+
+/* .form-login__header{
+    text-align: center;
+}
+*/
+.form-login__title{
+    text-align: center;
+    font-size: 1.5rem;
+} 
+
+.form-login__icon{
+    font-size: 5rem;
+}

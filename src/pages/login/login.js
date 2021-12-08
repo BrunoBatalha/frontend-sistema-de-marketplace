@@ -6,15 +6,9 @@ $(document).ready(function () {
     UTIL.toggleDisableForm();
     try {
       if (await firebaseAuth.getUid()) {
-        try {
-          await setLocalStorage();
-          await UTIL.showToast(MESSAGES.GLOBAL.USER_ALREADY_LOGGED, ENUMERATIONS.COLORS.SUCCESS);
-          UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
-        } catch (error) {
-          UTIL.showToast(UTIL.errorHandler(error));
-        } finally {
-          UTIL.toggleDisableForm();
-        }
+        await setLocalStorage();
+        await UTIL.showToast(MESSAGES.GLOBAL.USER_ALREADY_LOGGED, ENUMERATIONS.COLORS.SUCCESS);
+        UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
       }
     } catch (error) {
       UTIL.showToast(UTIL.errorHandler(error));
@@ -73,7 +67,7 @@ $(document).ready(function () {
       const ref = `users/${userUid}`;
       const data = await firebaseDatabase.readData(ref);
       if (!data) {
-        throw { code: "DATABASE_FAILED" };
+        throw { code: "ERROR_ON_LOAD_DATA" };
       }
 
       localStorage.setItem("userUid", userUid);

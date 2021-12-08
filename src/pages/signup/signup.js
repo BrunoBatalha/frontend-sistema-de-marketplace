@@ -55,7 +55,7 @@ $(document).ready(function () {
       const data = {
         name: $("#inputName").val(),
         email: $("#inputEmail").val(),
-        phone: "",
+        telephone: "",
         address: {},
         images: {},
         points: 0
