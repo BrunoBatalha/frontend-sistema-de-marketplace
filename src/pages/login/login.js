@@ -1,4 +1,28 @@
 $(document).ready(function () {
+
+  checkUserAlreadyLogged();
+
+  async function checkUserAlreadyLogged() {
+    UTIL.toggleDisableForm();
+    try {
+      if (await firebaseAuth.getUid()) {
+        try {
+          await setLocalStorage();
+          await UTIL.showToast(MESSAGES.GLOBAL.USER_ALREADY_LOGGED, ENUMERATIONS.COLORS.SUCCESS);
+          UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+        } catch (error) {
+          UTIL.showToast(UTIL.errorHandler(error));
+        } finally {
+          UTIL.toggleDisableForm();
+        }
+      }
+    } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
+    } finally {
+      UTIL.toggleDisableForm();
+    }
+  }
+
   $("#checkboxShowHidePassword").on("change", onChangeCheckboxPassword);
 
   function onChangeCheckboxPassword(event) {
@@ -26,6 +50,7 @@ $(document).ready(function () {
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
     } catch (error) {
       UTIL.showToast(UTIL.errorHandler(error));
+    } finally {
       UTIL.toggleDisableForm();
     }
   }
@@ -41,12 +66,17 @@ $(document).ready(function () {
   async function setLocalStorage() {
     try {
       const userUid = await firebaseAuth.getUid();
-      localStorage.setItem("userUid", userUid);
+      if (userUid == null) {
+        throw { code: "USER_NOT_LOGGED" };
+      }
+
       const ref = `users/${userUid}`;
       const data = await firebaseDatabase.readData(ref);
       if (!data) {
         throw { code: "DATABASE_FAILED" };
       }
+
+      localStorage.setItem("userUid", userUid);
       localStorage.setItem("userData", JSON.stringify(data));
     } catch (error) {
       throw error;

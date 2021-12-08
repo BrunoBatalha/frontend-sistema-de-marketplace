@@ -2,7 +2,7 @@ const firebaseDatabase = (() => {
     const database = firebase.database();
 
     const readData = async (ref = "/") => {
-        return await new Promise(function (resolve, reject) {
+        return await new Promise((resolve, reject) => {
             database.ref(ref).on('value', (snapshot) => {
                 if (snapshot.val) {
                     resolve(snapshot.val());

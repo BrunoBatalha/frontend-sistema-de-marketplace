@@ -22,15 +22,16 @@ $(document).ready(function () {
 
     try {
       validatePasswords(inputValues.password, inputValues.confirmPassword);
-     
+
       await signup(inputValues.email, inputValues.password);
       await insertUserDatabase();
       await firebaseAuth.signOut();
-      
+
       await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_SIGN_UP, ENUMERATIONS.COLORS.SUCCESS);
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
     } catch (error) {
       UTIL.showToast(UTIL.errorHandler(error));
+    } finally {
       UTIL.toggleDisableForm();
     }
   }
@@ -61,6 +62,10 @@ $(document).ready(function () {
       };
 
       const userUid = await firebaseAuth.getUid();
+      if (userUid == null) {
+        throw { code: "USER_NOT_LOGGED" };
+      }
+
       const ref = `users/${userUid}`;
       await firebaseDatabase.writeData(data, ref);
     } catch (error) {

@@ -2,15 +2,13 @@ const firebaseAuth = (() => {
     const auth = firebase.auth();
 
     const getUid = async () => {
-        try {
-            const user = auth.currentUser;
-            if (user !== null){
-                return user.uid;
-            }
-            throw {code: "USER_NOT_LOGGED"};
-        }catch(error) {
-            throw error
-        }
+        return await new Promise((resolve, reject) => {
+            auth.onAuthStateChanged((user) => {
+                resolve(user?.uid);
+            }, (error) => {
+                throw reject(error);
+            });
+        });
     };
 
     const createLoginUsingEmailAndPassword = async (email, password) => {
