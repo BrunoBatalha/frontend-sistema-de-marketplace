@@ -30,4 +30,15 @@ $(document).ready(async function () {
       throw error;
     }
   }
+
+  $("#input-profile-pic").on("change", loadImage);
+
+  function loadImage(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function () {
+      URL.revokeObjectURL(output.src);
+    };
+    $("#button-label-image").css("display", "none");
+  }
 });
