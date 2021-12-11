@@ -13,28 +13,49 @@
 </head>
 
 <body>
-    <form class="col-md-6 mx-auto px-5 form" id="form-signup">
+    <form class="col-md-6 mx-auto px-5 form" id="form-create-shop">
         <div class="mx-auto mb-3 text-center">
-            <h5 class="form__title">Editar informações</h5>
+            <h5 class="form__title">Criação de loja</h5>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputName" placeholder="Hellyandro" required>
+            <input type="text" class="form-control" id="inputName" placeholder="_blank" required>
             <label for="inputName">Nome</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="inputEmail" placeholder="user123@example.com" required>
-            <label for="inputEmail">Email</label>
+            <input type="text" class="form-control" id="inputCnpj" placeholder="_blank" required>
+            <label for="inputCnpj">CNPJ</label>
+        </div>
+    
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputProductTypes" placeholder="_blank" required>
+            <label for="inputProductTypes">Tipos de produtos oferecidos</label>
+        </div>           
+        
+        <select class="form-select mb-3 form__select" id="selectState" required></select>
+
+        <div class="my-2">
+            <h7>Contatos</h7>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputTelephone" placeholder="92 99891-8971" required>
-            <label for="inputTelephone">Telefone</label>
+            <input type="text" class="form-control" id="inputComercialPhone" placeholder="_blank" required>
+            <label for="inputComercialPhone">Telefone comecial</label>
         </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputProductTypes" placeholder="_blank" required>
+            <label for="inputInstagram">Instagram</label>
+        </div>   
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputProductTypes" placeholder="_blank" required>
+            <label for="inputFacebook">Facebook</label>
+        </div>   
         
         <div class="form-floating mb-3 text-center">
-            <button class="btn btn-primary w-100 my-2">Confirmar alterações</button>
+            <button class="btn btn-primary w-100 my-2">Criar</button>
             <a href="./profile-user.html">Voltar</a>
         </div>
     </form>
@@ -54,16 +75,17 @@
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
      <!-- CUSTOM SCRIPTS ESSENTIALS -->
+     <script src="./src/js/constants-enumerations.js"></script>
      <script src="./src/js/utils.js"></script>
      <script src="./src/firebase/instance.js"></script>
      <script src="./src/firebase/database.js"></script>
      <script src="./src/firebase/auth.js"></script>
-     <script src="./src/js/constants-enumerations.js"></script>
      <script src="./src/js/config.js"></script>
      <script src="./src/js/components.js"></script>
+     <script src="./src/js/shop-facade.js"></script>
 
     <!-- PAGE SCRIPTS -->
-    <script src="./src/pages/edit-user/edit-user.js"></script>
+    <script src="./src/pages/create-shop/create-shop.js"></script>
 </body>
 
 </html>
