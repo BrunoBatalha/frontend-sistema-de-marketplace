@@ -47,5 +47,9 @@ const UTIL = {
             <p class="details__text-details">${text}</p>
           `;
     },
+    getHtmlOptionsSelect: function (options, initialOption) {
+      const firstOption = `<option selected disabled>${initialOption}</option>`;
+      return firstOption + options.reduce((accumulator, option) => `${accumulator}<option value="${option}">${option}</option>`, '');
+    },
   },
 };
