@@ -19,14 +19,15 @@ $(document).ready(function () {
             configureCarousels();
         });
 
-        function getHtmlCarouselItem(srcImage, isActive, shopId) {
-            return `
-                <div class="carousel-item ${isActive ? "active" : ""}">
-                    <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
-                        <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
-                    </a>
-                </div>`;
-        }
+    }
+
+    function getHtmlCarouselItem(srcImage, isActive, shopId) {
+        return `
+            <div class="carousel-item ${isActive ? "active" : ""}">
+                <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
+                    <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
+                </a>
+            </div>`;
     }
 
     async function listShops() {
