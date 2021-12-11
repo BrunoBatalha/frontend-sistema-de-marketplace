@@ -8,8 +8,14 @@ $(document).ready(function () {
             const allItemsHtml = listItems.reduce((accumulator, item, index) => {
                 return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
             }, "");
-            wrapperItemsShop.html(allItemsHtml);
             wrapperItemsProduct.html(allItemsHtml);
+            configureCarousels();
+        });
+        listShops().then(entities => {
+            const allItemsHtml = entities.reduce((accumulator, item, index) => {
+                return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
+            }, "");
+            wrapperItemsShop.html(allItemsHtml);
             configureCarousels();
         });
 
@@ -20,6 +26,14 @@ $(document).ready(function () {
                         <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
                     </a>
                 </div>`;
+        }
+    }
+
+    async function listShops() {
+        try {
+            return firebaseDatabase.list();
+        } catch (error) {
+            UTIL.showToastTreatError(error);
         }
     }
 

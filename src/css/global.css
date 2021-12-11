@@ -26,6 +26,12 @@ a:hover {
   font-size: 16px;
 }
 
+.md-toast-warning {
+  background-color: #ffc107;
+  color: white;
+  font-size: 16px;
+}
+
 .details__text-details {
   font-size: 1.2rem;
 }

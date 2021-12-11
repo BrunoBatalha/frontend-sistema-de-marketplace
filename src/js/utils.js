@@ -1,4 +1,8 @@
 const UTIL = {
+  showToastTreatError: async (message) => {
+    this.showToast(this.errorHandler(message))
+  },
+
   showToast: async function (
     message = "",
     type = ENUMERATIONS.COLORS.ERROR,

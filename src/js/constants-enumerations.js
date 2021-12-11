@@ -10,6 +10,13 @@ const CONSTANTS = {
     SUCCESS: "Sucesso",
     SELECT_STATE: "Selecione o estado",
     MY_SHOP: "Minha loja",
+    ACCESS: "Acessos",
+    SALES: "Vendas",
+    INCOME_CURRENT_MONTH: "Rendimento do mês atual",
+    INCOME_LAST_MONTH: "Rendimento do último mês",
+    COMERCIAL_PHONE: "Telefone comercial",
+    INSTAGRAM: "Instagram",
+    FACEBOOK: "Facebook",
   },
   STATES: [
     "Acre",
@@ -63,7 +70,7 @@ const CONSTANTS = {
       LOGIN: "login",
       EDIT_USER: "edit-user",
       CREATE_SHOP: "create-shop",
-      MY_SHOP: "my-shop",
+      MY_SHOP: "profile-my-shop",
     },
   },
 };
@@ -81,7 +88,8 @@ const ENUMERATIONS = {
   },
   COLORS: {
     SUCCESS: 'success',
-    ERROR: 'error'
+    ERROR: 'error',
+    WARN: 'warning'
   }
 };
 

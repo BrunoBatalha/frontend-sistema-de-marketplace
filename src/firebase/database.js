@@ -62,6 +62,25 @@ const firebaseDatabase = (() => {
         });
     }
 
+
+    const list = (ref) => {
+        return new Promise(async (resolve, reject) => {
+            database.ref(ref).on('child_added', function (snapshot) {
+                const entities = []
+                snapshot.forEach(function (childSnapshot) {
+                    entities.push({
+                        id: childSnapshot.key,
+                        image: `https://via.placeholder.com/300x300.png/09f/fff?text=loja${childSnapshot.key}`,
+                        ...childSnapshot.val()
+                    });
+                });
+                resolve(entities);
+            }, error => {
+                reject(error)
+            });
+        });
+    }
+
     return {
         readData,
         writeData,
@@ -69,7 +88,8 @@ const firebaseDatabase = (() => {
         updateData,
         deleteData,
         loadUserData,
-        getBy
+        getBy,
+        list
     };
 })()
 
