@@ -13,14 +13,28 @@ $(document).ready(async function () {
       wrapperDetails.html(htmlDetails);
     } catch (error) {
       UTIL.showToast(UTIL.errorHandler(error));
-      UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
     }
   }
 
-  function configureButtons() {
+  async function configureButtons() {
     $('#btn-edit-informations').on('click', function () {
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
     });
+
+    const has = await hasShopUser()
+    if (has) {
+      $('#btn-shop').html(CONSTANTS.LABELS.MY_SHOP);
+      $('#btn-shop').attr('href', CONSTANTS.SITE.PAGES.MY_SHOP);
+    }
+  }
+
+  async function hasShopUser() {
+    try {
+      return await shopFacade.hasUserShop();
+    } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
+    }
   }
 
   async function loadUserData() {
