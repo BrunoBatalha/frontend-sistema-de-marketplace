@@ -4,6 +4,7 @@ $(document).ready(function () {
   function onChangeCheckboxPassword(event) {
     const checkbox = event.target;
     const isChecked = $(checkbox).is(":checked");
+    $("#inputPassword").attr("type", isChecked ? "text" : "password");
     $("#inputConfirmPassword").attr("type", isChecked ? "text" : "password");
   }
 

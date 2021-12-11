@@ -55,7 +55,7 @@ const firebaseDatabase = (() => {
                         ...childSnapshot.val()
                     });
                 });
-                resolve({});
+                resolve(null);
             }, error => {
                 reject(error)
             });
