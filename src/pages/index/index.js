@@ -2,23 +2,16 @@ $(document).ready(function () {
     fillItemsCarousel()
 
     function fillItemsCarousel() {
-        const wrapperItemsShop = $("#carouselInnerShops");
-        const wrapperItemsProduct = $("#carouselInnerProducts");
-        listMock().then(listItems => {
-            const allItemsHtml = listItems.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
-            }, "");
-            wrapperItemsProduct.html(allItemsHtml);
-            configureCarousels();
-        });
-        listShops().then(entities => {
-            const allItemsHtml = entities.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
-            }, "");
-            wrapperItemsShop.html(allItemsHtml);
-            configureCarousels();
-        });
+        listMock().then(entities => setCarousel(entities, $("#carouselInnerProducts")));
+        listShops().then(entities => setCarousel(entities, $("#carouselInnerShops")));
+    }
 
+    function setCarousel(entities, wrapper) {
+        const allItemsHtml = entities.reduce((accumulator, item, index) => {
+            return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
+        }, "");
+        wrapper.html(allItemsHtml);
+        configureCarousels();
     }
 
     function getHtmlCarouselItem(srcImage, isActive, shopId) {
