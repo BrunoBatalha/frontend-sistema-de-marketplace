@@ -6,6 +6,7 @@ $(document).ready(async function () {
     const wrapperDetails = $("#user-details");
     try {
       const user = await loadUserData();
+      setImageProfile(user);
       const htmlDetails =
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.NAME, user.name) +
         UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TELEPHONE, user.telephone) +
@@ -22,7 +23,7 @@ $(document).ready(async function () {
       UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
     });
 
-    const has = await hasShopUser()
+    const has = await hasShopUser();
     if (has) {
       $('#btn-shop').html(CONSTANTS.LABELS.MY_SHOP);
       $('#btn-shop').attr('href', CONSTANTS.SITE.PAGES.MY_SHOP);
@@ -45,14 +46,12 @@ $(document).ready(async function () {
     }
   }
 
-  $("#input-profile-pic").on("change", loadImage);
-
-  function loadImage(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function () {
-      URL.revokeObjectURL(output.src);
-    };
-    $("#button-label-image").css("display", "none");
-  }
+  async function setImageProfile(user) {
+    const imgProfile = document.getElementById('img-profile');
+    let userProfileImg = "./src/images/default-avatar-profile.jpg";
+    if (user.images && user.images.profile) {
+      userProfileImg = user.images.profile;
+    }
+    imgProfile.src = userProfileImg;
+  };
 });

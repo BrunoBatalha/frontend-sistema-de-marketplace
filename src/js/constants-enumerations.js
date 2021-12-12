@@ -91,7 +91,12 @@ const MESSAGES = {
     "auth/email-already-in-use": "Email já está em uso",
     "auth/user-not-found": "Cadastro não encontrado",
     "auth/weak-password": "A senha deve conter ao menos 6 caracteres",
-    "auth/wrong-password": "Email ou Senha inválido"
+    "auth/wrong-password": "Email ou Senha inválido",
+    "storage/unauthorized": "Upload não autorizado",
+    "storage/canceled": "Upload cancelado",
+    "storage/unknown": "Erro desconhecido ao fazer o upload do arquivo",
+    "storage/invalid-root-operation": "Operação inválida",
+    "storage/object-not-found": "Upload não encontrado"
   },
   GLOBAL: {
     SUCCESSFULLY_LOGIN: "Login realizado com sucesso",
@@ -102,6 +107,8 @@ const MESSAGES = {
     PASSWORDS_NOT_MATCH: "Senhas não coincidem",
     USER_NOT_LOGGED: "Erro ao acessar o conteúdo: usuário não logado",
     USER_ALREADY_LOGGED: "Usuário já logado!",
-    ERROR_ON_LOAD_DATA: "Erro inesperado ao carregar dados"
+    ERROR_ON_LOAD_DATA: "Erro inesperado ao carregar dados",
+    ERROR_ON_UPLOAD_FILE: "Erro ao fazer o upload do arquivo",
+    FILE_SELECTED_MUST_BE_IMAGE: "O arquivo selecionado deve ser uma imagem"
   }
 };
