@@ -54,13 +54,13 @@ a:hover {
   height: 58px;
 }
 
-.img-border {
-  border-radius: 10px;
-  cursor: pointer;
-  border: 5px solid #ccc;
+.img-profile-container {
+    width: 230px;
+    height: 230px;
 }
 
-.img-container {
- width:320px;
- height: 320px;
+.img-profile {
+    border-radius: 100%;
+    cursor: pointer;
+    border: 5px solid #ccc;
 }

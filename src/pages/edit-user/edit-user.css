@@ -1,14 +1,3 @@
-.img-profile-edit-container {
-    width: 230px;
-    height: 230px;
-}
-
-.img-profile-edit {
-    border-radius: 100%;
-    cursor: pointer;
-    border: 5px solid #ccc;
-}
-
 .custom-button-upload {
     border: 0px;
     background-color: white;
