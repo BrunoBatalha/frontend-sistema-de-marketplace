@@ -7,8 +7,6 @@ $(document).ready(async function () {
     configureForm();
 
     function configureForm() {
-        $('#selectState').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.STATES, CONSTANTS.LABELS.SELECT_STATE))
-
         $("#form-create-shop").on("submit", onSubmitCreate);
     }
 

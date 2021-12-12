@@ -52,13 +52,7 @@ $(document).ready(async function () {
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
-                    <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center" id="ul-nav-item">
-                        <li class="nav-item me-3">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-gear-fill navbar__icon"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center" id="ul-nav-item"></ul>
                 </div>
             </div>
         </nav>
@@ -77,8 +71,13 @@ $(document).ready(async function () {
     if (await firebaseAuth.getUid()) {
         $('#ul-nav-item').append(`
             <li class= "nav-item">
-                <a class="nav-link" href="profile-user.html">
+                <a class="nav-link" href="profile-user.html" title="Meu perfil">
                     <i class="bi bi-person-fill navbar__icon"></i>
+                </a>
+            </li>
+            <li class= "nav-item">
+                <a class="nav-link" title="Sair" href="#" id="btn-logout">
+                    <i class="bi bi-box-arrow-right"></i>
                 </a>
             </li>
         `);
@@ -89,4 +88,14 @@ $(document).ready(async function () {
             </li >
         `);
     }
+
+    $('#btn-logout').on('click', async function () {
+        try {
+            UTIL.showToast("Saindo...", ENUMERATIONS.COLORS.WARN);
+            await firebaseAuth.signOut();
+            UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN)
+        } catch (error) {
+            UTIL.showToastTreatError(error);
+        }
+    })
 });

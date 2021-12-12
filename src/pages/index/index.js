@@ -2,24 +2,32 @@ $(document).ready(function () {
     fillItemsCarousel()
 
     function fillItemsCarousel() {
-        const wrapperItemsShop = $("#carouselInnerShops");
-        const wrapperItemsProduct = $("#carouselInnerProducts");
-        listMock().then(listItems => {
-            const allItemsHtml = listItems.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
-            }, "");
-            wrapperItemsShop.html(allItemsHtml);
-            wrapperItemsProduct.html(allItemsHtml);
-            configureCarousels();
-        });
+        listMock().then(entities => setCarousel(entities, $("#carouselInnerProducts")));
+        listShops().then(entities => setCarousel(entities, $("#carouselInnerShops")));
+    }
 
-        function getHtmlCarouselItem(srcImage, isActive, shopId) {
-            return `
-                <div class="carousel-item ${isActive ? "active" : ""}">
-                    <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
-                        <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
-                    </a>
-                </div>`;
+    function setCarousel(entities, wrapper) {
+        const allItemsHtml = entities.reduce((accumulator, item, index) => {
+            return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
+        }, "");
+        wrapper.html(allItemsHtml);
+        configureCarousels();
+    }
+
+    function getHtmlCarouselItem(srcImage, isActive, shopId) {
+        return `
+            <div class="carousel-item ${isActive ? "active" : ""}">
+                <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
+                    <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
+                </a>
+            </div>`;
+    }
+
+    async function listShops() {
+        try {
+            return firebaseDatabase.list();
+        } catch (error) {
+            UTIL.showToastTreatError(error);
         }
     }
 
