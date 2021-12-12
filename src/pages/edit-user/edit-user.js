@@ -71,7 +71,6 @@ $(document).ready(async function () {
     async function getFormData(user) {
         return Object.assign(user, {
             name: inputs.name.val(),
-            email: inputs.email.val(),
             telephone: inputs.telephone.val(),
         });
     }
