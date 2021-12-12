@@ -13,13 +13,13 @@ const shopFacade = {
     insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook) {
         try {
             const data = {
-                [_properties.name]: name ?? "",
-                [_properties.cnpj]: cnpj ?? "",
-                [_properties.comercialPhone]: comercialPhone ?? "",
-                [_properties.productTypes]: productTypes ?? "",
-                [_properties.state]: state ?? "",
-                [_properties.instagram]: instagram ?? "",
-                [_properties.facebook]: facebook ?? "",
+                [_properties.name]: name || "-",
+                [_properties.cnpj]: cnpj || "-",
+                [_properties.comercialPhone]: comercialPhone || "-",
+                [_properties.productTypes]: productTypes || "-",
+                [_properties.state]: state || "-",
+                [_properties.instagram]: instagram || "-",
+                [_properties.facebook]: facebook || "-",
                 [_properties._idUser]: await getUserId()
             };
 
@@ -40,7 +40,6 @@ const shopFacade = {
     getByUserId: async function () {
         try {
             const entity = await firebaseDatabase.getBy(_REF, _properties._idUser, await getUserId());
-
             return {
                 ...entity,
                 incomeCurrentMonth: await calculateIncomeCurrentMonth(),
@@ -64,13 +63,13 @@ const shopFacade = {
         try {
             const { id } = await this.getByUserId();
             const data = {
-                [_properties.name]: name ?? "",
-                [_properties.cnpj]: cnpj ?? "",
-                [_properties.comercialPhone]: comercialPhone ?? "",
-                [_properties.productTypes]: productTypes ?? "",
-                [_properties.state]: state ?? "",
-                [_properties.instagram]: instagram ?? "",
-                [_properties.facebook]: facebook ?? ""
+                [_properties.name]: name || "-",
+                [_properties.cnpj]: cnpj || "-",
+                [_properties.comercialPhone]: comercialPhone || "-",
+                [_properties.productTypes]: productTypes || "-",
+                [_properties.state]: state || "-",
+                [_properties.instagram]: instagram || "-",
+                [_properties.facebook]: facebook || "-"
             };
 
             await firebaseDatabase.updateData(data, `${_REF}/${id}`);
