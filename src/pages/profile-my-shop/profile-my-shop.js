@@ -28,8 +28,7 @@ $(document).ready(async function () {
 
         const has = await hasShopUser()
         if (has) {
-            $('#btn-shop').html(CONSTANTS.LABELS.MY_SHOP);
-            $('#btn-shop').attr('href', CONSTANTS.SITE.PAGES.MY_SHOP);
+            
         }
     }
 

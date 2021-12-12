@@ -53,3 +53,19 @@ a:hover {
 .form__select{
   height: 58px;
 }
+
+
+.custom-button-upload {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.img-border {
+  border-radius: 10px;
+  cursor: pointer;
+  border: 5px solid #ccc;
+}
+.img-container {
+ width:320px;
+ height: 320px;
+}

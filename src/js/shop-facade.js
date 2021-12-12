@@ -58,7 +58,27 @@ const shopFacade = {
         } catch (error) {
             throw error;
         }
+    },
+
+    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook) {
+        try {
+            const { id } = await this.getByUserId();
+            const data = {
+                [_properties.name]: name ?? "",
+                [_properties.cnpj]: cnpj ?? "",
+                [_properties.comercialPhone]: comercialPhone ?? "",
+                [_properties.productTypes]: productTypes ?? "",
+                [_properties.state]: state ?? "",
+                [_properties.instagram]: instagram ?? "",
+                [_properties.facebook]: facebook ?? ""
+            };
+
+            await firebaseDatabase.updateData(data, `${_REF}/${id}`);
+        } catch (error) {
+            throw error;
+        }
     }
+
 }
 
 async function getUserId() {
