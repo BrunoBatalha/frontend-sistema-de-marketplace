@@ -5,6 +5,7 @@ $(document).ready(async function () {
     await fillForm();
 
     async function fillForm() {
+        UTIL.toggleDisableForm();
         try {
             const shop = await shopFacade.getByUserId();
             setBanner(shop);
@@ -18,6 +19,8 @@ $(document).ready(async function () {
         } catch (error) {
             UTIL.showToast(UTIL.errorHandler(error));
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+        } finally {
+            UTIL.toggleDisableForm();
         }
     }
 
