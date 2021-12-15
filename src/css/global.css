@@ -64,3 +64,23 @@ a:hover {
     cursor: pointer;
     border: 5px solid #ccc;
 }
+
+.custom-button-upload {
+  border: 0px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.img-banner-container {
+  width: 400px;
+  height: 200px;
+}
+
+.min-img-product-container {
+  height: 100px;
+}
+
+.img-banner {
+    cursor: pointer;
+    border: 5px solid #ccc;
+}

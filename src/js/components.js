@@ -6,14 +6,7 @@ $(document).ready(async function () {
                     <a class="nav-link active dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
                         Lojas
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Imóveis</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Auto peças</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Eletrônicos e celulares</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Moda e beleza</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Animais de estimação</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Serviços</a></li>
-                        <li><a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=1">Artigos infatis</a></li>
+                    <ul class="dropdown-menu" id="categories">
                     </ul>
                 </div>
             </li>
@@ -67,35 +60,46 @@ $(document).ready(async function () {
             </div>
         </div>
     `);
+    const categories = await firebaseDatabase.list("categories");
+    let htmlAppend = "";
+    for (const category of categories) {
+        htmlAppend += `
+        <li>
+            <a class="dropdown-item" href="${CONSTANTS.SITE.PAGES.HOME}.html?${CONSTANTS.URL_PARAMS.CATEGORY_ID}=${category.name}">
+                ${category.name}
+            </a>
+        </li>`;
+    }
+    $("#categories").append(htmlAppend);
 
     if (await firebaseAuth.getUid()) {
         $('#ul-nav-item').append(`
-            <li class= "nav-item">
+            < li class= "nav-item" >
                 <a class="nav-link" href="profile-user.html" title="Meu perfil">
                     <i class="bi bi-person-fill navbar__icon"></i>
                 </a>
-            </li>
-            <li class= "nav-item">
+            </li >
+            <li class="nav-item">
                 <a class="nav-link" title="Sair" href="#" id="btn-logout">
                     <i class="bi bi-box-arrow-right"></i>
                 </a>
-            </li>
+            </li>;
         `);
     } else {
         $('#ul-nav-item').append(`
-            <li class= "nav-item">
+            < li class= "nav-item" >
                 <a class="nav-link" href="${CONSTANTS.SITE.PAGES.LOGIN}.html">Entrar</a>
             </li >
-        `);
+            `);
     }
 
     $('#btn-logout').on('click', async function () {
         try {
             UTIL.showToast("Saindo...", ENUMERATIONS.COLORS.WARN);
             await firebaseAuth.signOut();
-            UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN)
+            UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
         } catch (error) {
             UTIL.showToastTreatError(error);
         }
-    })
+    });
 });

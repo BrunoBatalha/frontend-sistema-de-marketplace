@@ -19,24 +19,53 @@
     <section id="nav-links-component"></section>
 
     <section class="mb-4">
-        <h2 class="container">Minha loja</h2>
-        <div class="py-3">
-            <div class="container ">
-                <div class="row gy-2">
-                    <div class="col-md-4">
-                        <label class="img-container d-flex align-items-center justify-content-center">
-                            <div style="position: absolute;">
-                                <input id="input-profile-pic" type="file" accept="image/*" style="display:none">
-                                <button id="button-label-image" class="custom-button-upload"
-                                    onclick="document.getElementById('input-profile-pic').click()">
-                                    Escolha uma imagem</button>
-                            </div>
-                            <img id="output" width="100%" height="100%" class="img-border" />
-                        </label>
+        <div class="container">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-10 d-flex align-items-center justify-content-start">
+                            <h2>Minha loja</h2>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center justify-content-end"><a
+                                href="./create-product.html" class="btn-shop btn btn-outline-primary">Editar
+                                informações</a></div>
                     </div>
-                    <div class="col-md-8 d-flex flex-column justify-content-between">
-                        <span class="text-break" id="shop-details"></span>
-                        <a class="btn btn-primary w-100 mb-2" href="edit-shop.html">Editar informações</a>                          
+                </div>
+
+                <div class="card-body py-3">
+                    <div class="container">
+                        <div class="row gy-2">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                <label class="img-banner-container d-flex align-items-center justify-content-center">
+                                    <img id="img-banner" width="100%" height="100%" class="img-banner" />
+                                </label>
+                            </div>
+                            <div class="col-md-8 d-flex flex-column justify-content-between">
+                                <span class="text-break" id="shop-details"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-4">
+        <div class="container">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-10 d-flex align-items-center justify-content-start">Meus Produtos</div>
+                        <div class="col-md-2 d-flex align-items-center justify-content-end"><a
+                                href="./create-product.html" class="btn-shop btn btn-outline-primary">Novo
+                                produto</a></div>
+                    </div>
+                </div>
+
+                <div class="card-body py-3">
+                    <div class="container">
+                        <div class="row" id="my-products">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,6 +100,7 @@
     <script src="./src/js/config.js"></script>
     <script src="./src/js/components.js"></script>
     <script src="./src/js/shop-facade.js"></script>
+    <script src="./src/js/product-facade.js"></script>
 
     <!-- PAGE SCRIPTS -->
     <script src="./src/pages/profile-my-shop/profile-my-shop.js"></script>

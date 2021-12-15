@@ -13,21 +13,9 @@
 </head>
 
 <body>
-    <form class="col-md-6 mx-auto px-5 form" id="form-edit-shop">
+    <form class="col-md-6 mx-auto px-5 form" id="form-create-shop">
         <div class="mx-auto mb-3 text-center">
-            <h5 class="form__title">Editar loja</h5>
-        </div>
-
-        <div class="mx-auto mb-3 text-center d-flex align-items-center justify-content-center">
-            <label class="img-banner-container d-flex align-items-center justify-content-center">
-                <div style="position: absolute;">
-                    <input id="input-banner-pic" type="file" accept="image/*" style="display:none">
-                    <button type="button" id="button-label-image" class="custom-button-upload"
-                        onclick="document.getElementById('input-banner-pic').click()">
-                        Escolha uma imagem</button>
-                </div>
-                <img id="img-banner" width="100%" height="100%" class="img-banner" />
-            </label>
+            <h5 class="form__title">Criação de produto</h5>
         </div>
 
         <div class="form-floating mb-3">
@@ -36,45 +24,47 @@
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputCnpj" placeholder="_blank" required>
-            <label for="inputCnpj">CNPJ</label>
+            <input type="text" class="form-control" id="inputPrice" placeholder="_blank" required>
+            <label for="inputPrice">Preço</label>
         </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputProductTypes" placeholder="_blank" required>
-            <label for="inputProductTypes">Tipos de produtos oferecidos</label>
+        <div class="mb-3">
+            <label for="inputDescription">Descrição</label>
+            <textarea class="form-control" id="inputDescription" rows="5" required></textarea>
         </div>
 
-        <select class="form-select mb-3 form__select" id="selectState" required></select>
-
-        <div class="my-2">
-            <h7>Contatos</h7>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputComercialPhone" placeholder="_blank" required>
-            <label for="inputComercialPhone">Telefone comecial</label>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputInstagram" placeholder="_blank" required>
-            <label for="inputInstagram">Instagram</label>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="inputFacebook" placeholder="_blank" required>
-            <label for="inputFacebook">Facebook</label>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="d-flex align-items-center justify-content-center" style="width: 100%; height: 200px;">
+                    <div style="position: absolute;">
+                        <input id="input-picker-image1" type="file" accept="image/*" style="display:none">
+                        <button type="button" id="button-picker-image1" class="custom-button-upload"
+                            onclick="document.getElementById('input-picker-image1').click()">
+                            Escolha a 1° imagem</button>
+                    </div>
+                    <img id="img-product1" width="100%" height="100%" class="img-banner" />
+                </label>
+            </div>
+            <div class="col-md-6">
+                <label class="d-flex align-items-center justify-content-center" style="width: 100%; height: 200px;">
+                    <div style="position: absolute;">
+                        <input id="input-picker-image2" type="file" accept="image/*" style="display:none">
+                        <button type="button" id="button-picker-image2" class="custom-button-upload"
+                            onclick="document.getElementById('input-picker-image2').click()">
+                            Escolha a 2° imagem</button>
+                    </div>
+                    <img id="img-product2" width="100%" height="100%" class="img-banner" />
+                </label>
+            </div>
         </div>
 
         <div class="form-floating mb-3 text-center">
-            <button class="btn btn-primary w-100 my-2">Confirmar alterações</button>
+            <button class="btn btn-primary w-100 my-2">Criar</button>
             <a href="./profile-my-shop.html">Voltar</a>
         </div>
     </form>
 
     <div id="toast-component"></div>
-
-
 
     <!--  EXTERNALS SCRIPTS-->
     <script src="./rsc/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
@@ -97,9 +87,10 @@
     <script src="./src/js/config.js"></script>
     <script src="./src/js/components.js"></script>
     <script src="./src/js/shop-facade.js"></script>
+    <script src="./src/js/product-facade.js"></script>
 
     <!-- PAGE SCRIPTS -->
-    <script src="./src/pages/edit-shop/edit-shop.js"></script>
+    <script src="./src/pages/create-product/create-product.js"></script>
 </body>
 
 </html>

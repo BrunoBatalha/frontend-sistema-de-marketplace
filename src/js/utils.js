@@ -1,6 +1,6 @@
 const UTIL = {
-  showToastTreatError: async (message) => {
-    this.showToast(this.errorHandler(message))
+  showToastTreatError: async function (message) {
+    this.showToast(this.errorHandler(message));
   },
 
   showToast: async function (
@@ -50,6 +50,26 @@ const UTIL = {
             <span class="details__title-details">${titleDetail}:</span>
             <p class="details__text-details">${text}</p>
           `;
+    },
+    getCardProductDetail: function (name, description, price, image) {
+      return `
+      <div class="col-md-6 my-1">
+          <div class="card-deck">
+              <div class="card">
+                  <div class="card-body row">
+                      <div class="col-md-4 min-img-product-container">
+                          <img id="img-banner" width="100%" height="100%" class="img-banner" src="${image}" />
+                      </div>
+                      <div class="col-md-8">
+                          <h5 class="card-title">Nome: ${name}</h5>
+                          <p class="card-text">Descrição: ${description}</p>
+                          <p class="card-text"><small class="text-muted">Valor: R$ ${price}</small>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>`;
     },
     getHtmlOptionsSelect: function (options, initialOption) {
       const firstOption = `<option selected disabled>${initialOption}</option>`;

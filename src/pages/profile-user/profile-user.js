@@ -48,10 +48,7 @@ $(document).ready(async function () {
 
   async function setImageProfile(user) {
     const imgProfile = document.getElementById('img-profile');
-    let userProfileImg = "./src/images/default-avatar-profile.jpg";
-    if (user.images && user.images.profile) {
-      userProfileImg = user.images.profile;
-    }
-    imgProfile.src = userProfileImg;
+    let userProfileImg = "./src/images/default-avatar.jpg";
+    imgProfile.src = user.profile ?? userProfileImg;
   };
 });

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const firebaseDatabase = (() => {
     const database = firebase.database();
@@ -8,8 +8,9 @@ const firebaseDatabase = (() => {
             database.ref(ref).on('value', (snapshot) => {
                 if (snapshot.val) {
                     resolve(snapshot.val());
+                } else {
+                    resolve(snapshot);
                 }
-                resolve(snapshot);
             }, error => {
                 reject(error);
             });
@@ -57,29 +58,46 @@ const firebaseDatabase = (() => {
                 });
                 resolve(null);
             }, error => {
-                reject(error)
+                reject(error);
             });
         });
-    }
+    };
+
+    const getListBy = (ref = "/", by, equalTo) => {
+        checkProps(by, equalTo);
+        return new Promise(async (resolve, reject) => {
+            database.ref(ref).orderByChild(by).equalTo(equalTo).on('value', function (snapshot) {
+                const list = [];
+                snapshot.forEach(function (childSnapshot) {
+                    list.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                resolve(list);
+            }, error => {
+                reject(error);
+            });
+        });
+    };
 
 
     const list = (ref) => {
         return new Promise(async (resolve, reject) => {
-            database.ref(ref).on('child_added', function (snapshot) {
-                const entities = []
+            database.ref(ref).on('value', function (snapshot) {
+                const entities = [];
                 snapshot.forEach(function (childSnapshot) {
                     entities.push({
                         id: childSnapshot.key,
-                        image: `https://via.placeholder.com/300x300.png/09f/fff?text=loja${childSnapshot.key}`,
                         ...childSnapshot.val()
                     });
                 });
                 resolve(entities);
             }, error => {
-                reject(error)
+                reject(error);
             });
         });
-    }
+    };
 
     return {
         readData,
@@ -89,15 +107,16 @@ const firebaseDatabase = (() => {
         deleteData,
         loadUserData,
         getBy,
+        getListBy,
         list
     };
-})()
+})();
 
 function checkProps(...props) {
     props.forEach(p => {
         if (!p) {
-            console.error(new Error())
+            console.error(new Error());
         }
-    })
+    });
 
 }

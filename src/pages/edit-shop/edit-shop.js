@@ -7,6 +7,7 @@ $(document).ready(async function () {
     async function fillForm() {
         try {
             const shop = await shopFacade.getByUserId();
+            setBanner(shop);
             inputs.name.val(shop.name);
             inputs.cnpj.val(shop.cnpj);
             inputs.comercialPhone.val(shop.comercialPhone);
@@ -25,6 +26,9 @@ $(document).ready(async function () {
             event.preventDefault();
             UTIL.toggleDisableForm();
             try {
+                const shop = await shopFacade.getByUserId();
+                const bannerPath = await getBannerShop(shop);
+
                 await shopFacade.update(
                     inputs.name.val(),
                     inputs.cnpj.val(),
@@ -32,7 +36,8 @@ $(document).ready(async function () {
                     inputs.productTypes.val(),
                     inputs.state.val(),
                     inputs.instagram.val(),
-                    inputs.facebook.val()
+                    inputs.facebook.val(),
+                    bannerPath
                 );
                 await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_UPDATE, ENUMERATIONS.COLORS.SUCCESS);
                 UTIL.redirectTo(CONSTANTS.SITE.PAGES.MY_SHOP);
@@ -44,6 +49,13 @@ $(document).ready(async function () {
         });
     }
 
+    function setBanner(shop) {
+        if (shop.banner) {
+            const imgBanner = document.getElementById('img-banner');
+            imgBanner.src = shop.banner;
+            $("#button-label-image").css("display", "none");
+        }
+    };
 
     function getInputs() {
         return {
@@ -55,5 +67,48 @@ $(document).ready(async function () {
             instagram: $("#inputInstagram"),
             facebook: $("#inputFacebook"),
         };
+    }
+
+    $("#input-banner-pic").on("change", loadBanner);
+
+    async function loadBanner(event) {
+        try {
+            if (event.target.files.length === 0) return false;
+
+            if (!/^image\//.test(event.target.files[0].type))
+                throw { code: "FILE_SELECTED_MUST_BE_IMAGE" };
+
+            currentSelectedImg = event.target.files[0];
+
+            const imgBanner = document.getElementById('img-banner');
+            imgBanner.src = URL.createObjectURL(currentSelectedImg);
+            imgBanner.onload = function () {
+                URL.revokeObjectURL(imgBanner.src);
+            };
+            $("#button-label-image").css("display", "none");
+        } catch (error) {
+            UTIL.showToastTreatError(error);
+        }
+    }
+
+    async function getBannerShop(shop) {
+        if (!currentSelectedImg) {
+            return shop.images ? shop.images.banner : null;
+        }
+
+        const metadata = {
+            cacheControl: 'public,max-age=300',
+            contentType: 'image/jpeg',
+            name: "banner-pic"
+        };
+
+        const refImg = `${shop.id}/${metadata.name}`;
+
+        const fullPathImage = await firebaseStorage.upload(refImg, currentSelectedImg, metadata);
+        if (!fullPathImage) {
+            throw { code: "ERROR_ON_UPLOAD_FILE" };
+        }
+
+        return fullPathImage;
     }
 });

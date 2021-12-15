@@ -1,15 +1,24 @@
-$(document).ready(function () {
-    fillItemsCarousel()
+$(document).ready(async function () {
+    await fillItemsCarousel();
 
-    function fillItemsCarousel() {
-        listMock().then(entities => setCarousel(entities, $("#carouselInnerProducts")));
-        listShops().then(entities => setCarousel(entities, $("#carouselInnerShops")));
+    async function fillItemsCarousel() {
+        const products = await listProduct();
+        if (products) {
+            const allItemsHtml = products.reduce((accumulator, item, index) => {
+                return accumulator + getHtmlCarouselItem(item.image1 ?? item.image2 ?? "./src/images/default-product.jpg", index == 0, item.id);
+            }, "");
+            setCarousel(allItemsHtml, $("#carouselInnerProducts"));
+        }
+        const shops = await listShops();
+        if (shops) {
+            const allItemsHtml = shops.reduce((accumulator, item, index) => {
+                return accumulator + getHtmlCarouselItem(item.banner ?? "./src/images/default-shop.jpg", index == 0, item.id);
+            }, "");
+            setCarousel(allItemsHtml, $("#carouselInnerShops"));
+        }
     }
 
-    function setCarousel(entities, wrapper) {
-        const allItemsHtml = entities.reduce((accumulator, item, index) => {
-            return accumulator + getHtmlCarouselItem(item.image, index == 0, item.id);
-        }, "");
+    function setCarousel(allItemsHtml, wrapper) {
         wrapper.html(allItemsHtml);
         configureCarousels();
     }
@@ -25,20 +34,18 @@ $(document).ready(function () {
 
     async function listShops() {
         try {
-            return firebaseDatabase.list();
+            return await firebaseDatabase.list("shop");
         } catch (error) {
             UTIL.showToastTreatError(error);
         }
     }
 
-    function listMock() {
-        return new Promise(function (resolve) {
-            const list = [1, 2, 3, 4, 5, 7, 8, 9].map((item) => ({
-                image: `https://via.placeholder.com/300x300.png/09f/fff?text=loja${item}`,
-                id: `id${item}`
-            }))
-            resolve(list);
-        })
+    async function listProduct() {
+        try {
+            return await firebaseDatabase.list("products");
+        } catch (error) {
+            UTIL.showToastTreatError(error);
+        }
     }
 });
 
@@ -71,7 +78,7 @@ function configureCarouselThatShowMultipleItems(idCarousel) {
         _animate: function () {
             this._inner.animate({ scrollLeft: this._scrollPosition }, 600);
         },
-    }
+    };
     if (window.matchMedia("(min-width: 768px)").matches) {
         new bootstrap.Carousel(carouselMultipleItems, {
             interval: false,

@@ -1,6 +1,8 @@
-'use strict'
+'use strict';
 
 $(document).ready(async function () {
+    var currentSelectedImg = null;
+
     await checkIfAlreadyHasShop();
 
     const inputs = getInputs();
@@ -50,7 +52,7 @@ $(document).ready(async function () {
         try {
             const has = await shopFacade.hasUserShop();
             if (has) {
-                UTIL.redirectTo(CONSTANTS.SITE.PAGES.prof)
+                UTIL.redirectTo(CONSTANTS.SITE.PAGES.MY_SHOP);
             }
         } catch (error) {
             UTIL.showToast(UTIL.errorHandler(error));

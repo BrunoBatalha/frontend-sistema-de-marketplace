@@ -8,22 +8,14 @@ $(document).ready(async function () {
 
     async function fillFormUser() {
         try {
-            const user = await loadUserData();
+            const user = await firebaseDatabase.loadUserData();
             setImageProfile(user);
             inputs.name.val(user.name);
             inputs.email.val(user.email);
             inputs.telephone.val(user.telephone);
         } catch (error) {
-            UTIL.showToast(UTIL.errorHandler(error));
+            UTIL.showToastTreatError(error);
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
-        }
-    }
-
-    async function loadUserData() {
-        try {
-            return await firebaseDatabase.loadUserData();
-        } catch (error) {
-            throw error;
         }
     }
 
@@ -43,7 +35,7 @@ $(document).ready(async function () {
                 await editUserDatabase();
                 await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_UPDATE, ENUMERATIONS.COLORS.SUCCESS);
             } catch (error) {
-                UTIL.showToast(UTIL.errorHandler(error));
+                UTIL.showToastTreatError(error);
             } finally {
                 UTIL.toggleDisableForm();
             }
@@ -51,28 +43,25 @@ $(document).ready(async function () {
     }
 
     async function editUserDatabase() {
-        try {
-            const user = await loadUserData();
+        const user = await firebaseDatabase.loadUserData();
 
-            const userData = await getFormData(user);
-            const imgData = await getImagesData(user);
+        const userData = await getFormData(user);
+        const imgData = await getImagesData(user);
 
-            const updateData = Object.assign(userData, imgData);
-            const userUid = await firebaseAuth.getUid();
-            const ref = `users/${userUid}`;
+        const updateData = Object.assign(userData, imgData);
+        const userUid = await firebaseAuth.getUid();
+        const ref = `users/${userUid}`;
 
-            await firebaseDatabase.updateData(updateData, ref);
-            await setLocalStorage();
-        } catch (error) {
-            throw error;
-        }
+        await firebaseDatabase.updateData(updateData, ref);
+        await setLocalStorage();
     }
 
     async function getFormData(user) {
-        return Object.assign(user, {
+        return {
+            ...user,
             name: inputs.name.val(),
-            telephone: inputs.telephone.val(),
-        });
+            telephone: inputs.telephone.val()
+        };
     }
 
     function getInputs() {
@@ -84,23 +73,20 @@ $(document).ready(async function () {
     }
 
     async function setLocalStorage() {
-        try {
-            const userUid = await firebaseAuth.getUid();
-            if (userUid == null) {
-                throw { code: "USER_NOT_LOGGED" };
-            }
-
-            const ref = `users/${userUid}`;
-            const data = await firebaseDatabase.readData(ref);
-            if (!data) {
-                throw { code: "ERROR_ON_LOAD_DATA" };
-            }
-
-            localStorage.setItem("userUid", userUid);
-            localStorage.setItem("userData", JSON.stringify(data));
-        } catch (error) {
-            throw error;
+        const userUid = await firebaseAuth.getUid();
+        if (userUid == null) {
+            throw { code: "USER_NOT_LOGGED" };
         }
+
+        const ref = `users/${userUid}`;
+        const data = await firebaseDatabase.readData(ref);
+        if (!data) {
+            throw { code: "ERROR_ON_LOAD_DATA" };
+        }
+
+        localStorage.setItem("userUid", userUid);
+        localStorage.setItem("userData", JSON.stringify(data));
+
     }
 
     $("#input-profile-pic").on("change", loadImage);
@@ -121,7 +107,7 @@ $(document).ready(async function () {
             };
             $("#button-label-image").css("display", "none");
         } catch (error) {
-            UTIL.showToast(UTIL.errorHandler(error));
+            UTIL.showToastTreatError(error);
         }
     }
 
@@ -137,10 +123,6 @@ $(document).ready(async function () {
         };
 
         const userUid = await firebaseAuth.getUid();
-        if (!userUid) {
-            throw { code: "USER_NOT_LOGGED" };
-        }
-
         const refImg = `${userUid}/${metadata.name}`;
 
         const fullPathImage = await firebaseStorage.upload(refImg, currentSelectedImg, metadata);

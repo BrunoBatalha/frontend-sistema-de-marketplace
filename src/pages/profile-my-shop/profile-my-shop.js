@@ -1,19 +1,42 @@
 $(document).ready(async function () {
-    await fillFields();
+    await fillMyProfileFields();
+    await fillMyProductsFields();
     configureButtons();
 
-    async function fillFields() {
+    async function fillMyProfileFields() {
         const wrapperDetails = $("#shop-details");
         try {
-            const shop = await loadData();
+            const shop = await shopFacade.getByUserId();
+            setImageProfile(shop);
             const htmlDetails =
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.ACCESS, shop.access) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INSTAGRAM, shop.instagram) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.FACEBOOK, shop.facebook) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.SALES, shop.sales) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INCOME_LAST_MONTH, shop.incomeLastMonth) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INCOME_CURRENT_MONTH, shop.incomeCurrentMonth);
+                (shop.productTypes ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.productTypes) : "") +
+                (shop.comercialPhone ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) : "") +
+                (shop.instagram ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INSTAGRAM, shop.instagram) : "") +
+                (shop.facebook ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.FACEBOOK, shop.facebook) : "") +
+                (shop.sales ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.SALES, shop.sales) : "") +
+                (shop.incomeLastMonth ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INCOME_LAST_MONTH, shop.incomeLastMonth) : "") +
+                (shop.incomeCurrentMonth ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INCOME_CURRENT_MONTH, shop.incomeCurrentMonth) : "");
+            wrapperDetails.html(htmlDetails);
+        } catch (error) {
+            UTIL.showToast(UTIL.errorHandler(error));
+            UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
+        }
+    }
+
+    async function fillMyProductsFields() {
+        const wrapperDetails = $("#my-products");
+        try {
+            debugger;
+            let htmlDetails = "";
+            const products = await productFacade.getProductList();
+            if (!products) {
+                htmlDetails = "<h2>Não há produtos cadastrados</h2>";
+            } else {
+                for (const product of products) {
+                    htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
+                }
+            }
+
             wrapperDetails.html(htmlDetails);
         } catch (error) {
             UTIL.showToast(UTIL.errorHandler(error));
@@ -25,37 +48,10 @@ $(document).ready(async function () {
         $('#btn-edit-informations').on('click', function () {
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
         });
-
-        const has = await hasShopUser()
-        if (has) {
-            
-        }
     }
 
-    async function hasShopUser() {
-        try {
-            return await shopFacade.hasUserShop();
-        } catch (error) {
-            UTIL.showToast(UTIL.errorHandler(error));
-        }
-    }
-
-    async function loadData() {
-        try {
-            return await shopFacade.getByUserId();
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    $("#input-profile-pic").on("change", loadImage);
-
-    function loadImage(event) {
-        var output = document.getElementById('output');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () {
-            URL.revokeObjectURL(output.src);
-        };
-        $("#button-label-image").css("display", "none");
-    }
+    async function setImageProfile(shop) {
+        const imgProfile = document.getElementById('img-banner');
+        imgProfile.src = shop.banner ?? "./src/images/default-shop.jpg";
+    };
 });
