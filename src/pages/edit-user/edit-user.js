@@ -20,10 +20,9 @@ $(document).ready(async function () {
     }
 
     function setImageProfile(user) {
-        debugger;
-        if (user.images && user.images.profile) {
+        if (user.profile) {
             const imgProfile = document.getElementById('img-profile');
-            imgProfile.src = user.images.profile;
+            imgProfile.src = user.profile;
             $("#button-label-image").css("display", "none");
         }
     };
@@ -113,6 +112,7 @@ $(document).ready(async function () {
     }
 
     async function getImagesData(user) {
+        debugger;
         if (!currentSelectedImg) {
             return user.images;
         }

@@ -22,8 +22,7 @@ const shopFacade = {
                 [_shop_facade_properties.state]: state || "-",
                 [_shop_facade_properties.instagram]: instagram || "-",
                 [_shop_facade_properties.facebook]: facebook || "-",
-                [_shop_facade_properties._idUser]: await getUserId(),
-                [_shop_facade_properties.banner]: ""
+                [_shop_facade_properties._idUser]: await getUserId()
             };
 
             await firebaseDatabase.writeDataRandomGuid(data, _SHOP_FACADE_REF);
