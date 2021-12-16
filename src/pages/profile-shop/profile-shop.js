@@ -12,7 +12,7 @@ $(document).ready(function () {
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.productTypes);
         wrapperDetails.html(htmlDetails);
-        wrapperBanner.src = shop.banner ?? "./src/images/default-shop.jpg";
+        wrapperBanner.src = shop.banner != "" ? shop.banner : "./src/images/default-shop.jpg";
         shopName.html(shop.name);
         const productHtmlDetails = await domRenderLocal.getHtmlItemsOffered(shop.id);
         wrapperItemsOffered.html(productHtmlDetails);

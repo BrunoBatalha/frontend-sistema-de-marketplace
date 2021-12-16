@@ -48,6 +48,6 @@ $(document).ready(async function () {
     async function setImageProfile(shop) {
         debugger;
         const imgProfile = document.getElementById('img-banner');
-        imgProfile.src = shop.banner ?? "./src/images/default-shop.jpg";
+        imgProfile.src = shop.banner != "" ? shop.banner : "./src/images/default-shop.jpg";
     };
 });

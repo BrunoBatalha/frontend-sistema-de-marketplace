@@ -56,7 +56,7 @@ $(document).ready(async function () {
     }
 
     function setBanner(shop) {
-        if (shop.banner) {
+        if (shop.banner != "") {
             const imgBanner = document.getElementById('img-banner');
             imgBanner.src = shop.banner;
             $("#button-label-image").css("display", "none");

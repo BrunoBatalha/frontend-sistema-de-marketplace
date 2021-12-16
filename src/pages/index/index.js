@@ -4,7 +4,7 @@ $(document).ready(async function () {
 
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
-    const filteredByCategory = params[CONSTANTS.URL_PARAMS.CATEGORY_ID]
+    const filteredByCategory = params[CONSTANTS.URL_PARAMS.CATEGORY_ID];
 
     await fillItemsCarousel();
 
@@ -19,7 +19,7 @@ $(document).ready(async function () {
         const shops = await listShops();
         if (shops) {
             const allItemsHtml = shops.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.banner ?? "./src/images/default-shop.jpg", index == 0, item.id, href = "profile-shop", "SHOP_ID");
+                return accumulator + getHtmlCarouselItem(item.banner != "" ? item.banner : "./src/images/default-shop.jpg", index == 0, item.id, href = "profile-shop", "SHOP_ID");
             }, "");
             setCarousel(allItemsHtml, $("#carouselInnerShops"));
         }
