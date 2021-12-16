@@ -84,6 +84,13 @@ const firebaseDatabase = (() => {
         });
     };
 
+    const listContains = (ref = "/", by, contains) => {
+        return list(ref).then(items => {
+            return items.filter(_item => _item[by] && _item[by].toLowerCase().indexOf(contains.toLowerCase()) != -1)
+        }, err => err)
+    };
+
+
 
     const list = (ref) => {
         return new Promise(async (resolve, reject) => {
@@ -111,7 +118,8 @@ const firebaseDatabase = (() => {
         loadUserData,
         getBy,
         getListBy,
-        list
+        list,
+        listContains
     };
 })();
 

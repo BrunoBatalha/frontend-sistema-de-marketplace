@@ -124,3 +124,6 @@ const MESSAGES = {
     FILE_SELECTED_MUST_BE_IMAGE: "O arquivo selecionado deve ser uma imagem"
   }
 };
+
+
+const sessionStoraageSearch = "nomeDoItemPesquisado"
