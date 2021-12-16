@@ -49,6 +49,10 @@ $(document).ready(async function () {
   async function setImageProfile(user) {
     const imgProfile = document.getElementById('img-profile');
     let userProfileImg = "./src/images/default-avatar.jpg";
-    imgProfile.src = user.profile ?? userProfileImg;
+    if (user.images && user.images.profile) {
+      imgProfile.src = user.images.profile;
+    } else {
+      imgProfile.src = userProfileImg;
+    }
   };
 });

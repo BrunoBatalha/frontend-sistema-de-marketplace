@@ -73,12 +73,13 @@ $(document).ready(async function () {
     $("#categories").append(htmlAppend);
 
     if (await firebaseAuth.getUid()) {
+        const user = await firebaseDatabase.loadUserData();
         $('#ul-nav-item').append(`
-            <li class= "nav-item" >
-                <a class="nav-link" href="profile-user.html" title="Meu perfil">
-                    <i class="bi bi-person-fill navbar__icon"></i>
+            <li class="nav-item">
+                <a class="nav-link py-0 my-0 mx-2" href="profile-user.html" title="Meu perfil">
+                    <img class="img-min-profile" src="${user.profile ?? './src/images/default-avatar.jpg'}" />
                 </a>
-            </li >
+            </li>
             <li class="nav-item">
                 <a class="nav-link" title="Sair" href="#" id="btn-logout">
                     <i class="bi bi-box-arrow-right"></i>

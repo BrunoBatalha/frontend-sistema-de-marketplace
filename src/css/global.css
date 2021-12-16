@@ -55,8 +55,8 @@ a:hover {
 }
 
 .img-profile-container {
-    width: 230px;
-    height: 230px;
+    width: 250px;
+    height: 250px;
 }
 
 .img-profile {
@@ -83,4 +83,9 @@ a:hover {
 .img-banner {
     cursor: pointer;
     border: 5px solid #ccc;
+}
+.img-min-profile {
+  border-radius: 100%;
+  width: 35px;
+  height:35px;
 }

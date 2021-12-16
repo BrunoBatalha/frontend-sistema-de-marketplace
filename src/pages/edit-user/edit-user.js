@@ -20,6 +20,7 @@ $(document).ready(async function () {
     }
 
     function setImageProfile(user) {
+        debugger;
         if (user.images && user.images.profile) {
             const imgProfile = document.getElementById('img-profile');
             imgProfile.src = user.images.profile;
