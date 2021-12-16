@@ -47,6 +47,15 @@ const productFacade = {
         }
     },
 
+    getProduct: async function (productId) {
+        try {
+            return await firebaseDatabase.readData(`${_PRODUCT_FACADE_REF}/${productId}`);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+
     getByUserId: async function () {
         try {
             return await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await getUserId());

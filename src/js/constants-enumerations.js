@@ -18,6 +18,8 @@ const CONSTANTS = {
     STATE: "Estado",
     INSTAGRAM: "Instagram",
     FACEBOOK: "Facebook",
+    DESCRIPTION: "Description",
+    PRICE: "Valor"
   },
   STATES: [
     "Acre",
@@ -50,6 +52,7 @@ const CONSTANTS = {
   ],
   URL_PARAMS: {
     SHOP_ID: "shopId",
+    PRODUCT_ID: "productId",
     CATEGORY_ID: "categoryId"
   },
   SITE: {

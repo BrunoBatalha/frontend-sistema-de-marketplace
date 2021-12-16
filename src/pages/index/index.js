@@ -5,14 +5,14 @@ $(document).ready(async function () {
         const products = await listProduct();
         if (products) {
             const allItemsHtml = products.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.image1 ?? item.image2 ?? "./src/images/default-product.jpg", index == 0, item.id);
+                return accumulator + getHtmlCarouselItem(item.image1 ?? item.image2 ?? "./src/images/default-product.jpg", index == 0, item.id, href = "profile-product", "PRODUCT_ID");
             }, "");
             setCarousel(allItemsHtml, $("#carouselInnerProducts"));
         }
         const shops = await listShops();
         if (shops) {
             const allItemsHtml = shops.reduce((accumulator, item, index) => {
-                return accumulator + getHtmlCarouselItem(item.banner ?? "./src/images/default-shop.jpg", index == 0, item.id);
+                return accumulator + getHtmlCarouselItem(item.banner ?? "./src/images/default-shop.jpg", index == 0, item.id, href = "profile-shop", "SHOP_ID");
             }, "");
             setCarousel(allItemsHtml, $("#carouselInnerShops"));
         }
@@ -23,10 +23,10 @@ $(document).ready(async function () {
         configureCarousels();
     }
 
-    function getHtmlCarouselItem(srcImage, isActive, shopId) {
+    function getHtmlCarouselItem(srcImage, isActive, shopId, href, QUERY_PARAM) {
         return `
             <div class="carousel-item ${isActive ? "active" : ""}">
-                <a href="profile-shop.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${shopId}" class="carousel-item__img-wrapper">
+                <a href="${href}.html?${CONSTANTS.URL_PARAMS[QUERY_PARAM]}=${shopId}" class="carousel-item__img-wrapper">
                     <img src="${srcImage}" class="carousel-item__img-wrapper__image d-block w-100">
                 </a>
             </div>`;

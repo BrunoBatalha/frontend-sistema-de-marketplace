@@ -6,8 +6,7 @@ $(document).ready(function () {
         const wrapperItemsOffered = $('#shop-items-offered');
         const wrapperBanner = document.getElementById('shop-banner');
         const shopName = $('#shop-name');
-        debugger;
-        const shop = await loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID));
+        const shop = await loadShopProfile(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID));
         const htmlDetails =
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.STATE, shop.state) +
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
@@ -15,12 +14,11 @@ $(document).ready(function () {
         wrapperDetails.html(htmlDetails);
         wrapperBanner.src = shop.banner ?? "./src/images/default-shop.jpg";
         shopName.html(shop.name);
-        debugger;
         const productHtmlDetails = await domRenderLocal.getHtmlItemsOffered(shop.id);
         wrapperItemsOffered.html(productHtmlDetails);
     }
 
-    async function loadMock(shopId) {
+    async function loadShopProfile(shopId) {
         return await shopFacade.getShop(shopId);
     }
 
@@ -36,11 +34,10 @@ $(document).ready(function () {
             `;
         },
         getHtmlItemsOffered: async function (shopId) {
-            debugger;
             let htmlDetails = "";
             const products = await productFacade.getProductList(shopId);
             for (const product of products) {
-                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
+                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2 ?? "./src/images/default-product.jpg");
             }
 
             return htmlDetails;

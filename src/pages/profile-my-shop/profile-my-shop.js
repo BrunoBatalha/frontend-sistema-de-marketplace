@@ -29,7 +29,7 @@ $(document).ready(async function () {
             let htmlDetails = "";
             const products = await productFacade.getProductList();
             for (const product of products) {
-                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
+                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2 ?? "./src/images/default-product.jpg");
             }
 
             wrapperDetails.html(htmlDetails);
