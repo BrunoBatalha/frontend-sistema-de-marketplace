@@ -16,6 +16,8 @@ $(document).ready(async function () {
             inputs.facebook.val(shop.facebook);
             inputs.state.val(shop.state);
             inputs.productTypes.val(shop.productTypes);
+            inputs.category.val(shop._idCategory);
+
         } catch (error) {
             UTIL.showToast(UTIL.errorHandler(error));
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
@@ -40,7 +42,8 @@ $(document).ready(async function () {
                     inputs.state.val(),
                     inputs.instagram.val(),
                     inputs.facebook.val(),
-                    bannerPath
+                    bannerPath,
+                    inputs.category.val()
                 );
                 await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_UPDATE, ENUMERATIONS.COLORS.SUCCESS);
                 UTIL.redirectTo(CONSTANTS.SITE.PAGES.MY_SHOP);
@@ -69,6 +72,7 @@ $(document).ready(async function () {
             state: $("#selectState"),
             instagram: $("#inputInstagram"),
             facebook: $("#inputFacebook"),
+            category: $("#selectCategory"),
         };
     }
 

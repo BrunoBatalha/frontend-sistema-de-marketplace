@@ -3,6 +3,7 @@ $(document).ready(function () {
 
   setTitlePage(window.location.pathname);
   setSelectState();
+  setSelectCategories();
 
   function setTitlePage(url) {
     document.title = CONSTANTS.SITE.NAME;
@@ -18,6 +19,11 @@ $(document).ready(function () {
   function setSelectState() {
     if ($('#selectState')) {
       $('#selectState').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.STATES, CONSTANTS.LABELS.SELECT_STATE))
+    }
+  }
+  function setSelectCategories() {
+    if ($('#selectCategory')) {
+      $('#selectCategory').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.CATEGORIES, CONSTANTS.LABELS.SELECT_CATEGORY))
     }
   }
 });

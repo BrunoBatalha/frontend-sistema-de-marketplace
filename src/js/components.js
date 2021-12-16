@@ -108,5 +108,7 @@ $(document).ready(async function () {
         console.log($("#formSearchInput").val())
         sessionStorage.setItem(sessionStoraageSearch, $("#formSearchInput").val());
         UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
-    })
+    });
+    
+    
 });

@@ -1,6 +1,11 @@
 $(document).ready(async function () {
     const itemSearched = sessionStorage.getItem(sessionStoraageSearch);
     sessionStorage.removeItem(sessionStoraageSearch);
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const filteredByCategory = params[CONSTANTS.URL_PARAMS.CATEGORY_ID]
+
     await fillItemsCarousel();
 
     async function fillItemsCarousel() {
@@ -38,9 +43,14 @@ $(document).ready(async function () {
         try {
             if (itemSearched) {
                 return await shopFacade.listContain(itemSearched);
-            } else {
-                return await firebaseDatabase.list("shop");
             }
+
+            if (filteredByCategory) {
+                return await shopFacade.listByCategory(filteredByCategory);
+            }
+
+            return await firebaseDatabase.list("shop");
+
         } catch (error) {
             UTIL.showToastTreatError(error);
         }
@@ -50,8 +60,9 @@ $(document).ready(async function () {
         try {
             if (itemSearched) {
                 return await productFacade.listContain(itemSearched);
-            } else {
-                return await firebaseDatabase.list("products");
+            }
+            if (filteredByCategory) {
+                return await productFacade.listByCategory(filteredByCategory);
             }
         } catch (error) {
             UTIL.showToastTreatError(error);

@@ -7,7 +7,8 @@ const _product_facade_properties = {
     description: "description",
     price: "price",
     image1: "image1",
-    image2: "image2"
+    image2: "image2",
+    _idCategory: "_idCategory"
 };
 const productFacade = {
     insert: async function (_idShop, name = '', description = '', price = 0) {
@@ -35,6 +36,13 @@ const productFacade = {
     listContain: async function (str) {
         try {
             return await firebaseDatabase.listContains(_PRODUCT_FACADE_REF, _product_facade_properties.name, str);
+        } catch (error) {
+            throw error;
+        }
+    },
+    listByCategory: async function (str) {
+        try {
+            return await firebaseDatabase.listContains(_PRODUCT_FACADE_REF, _product_facade_properties._idCategory, str);
         } catch (error) {
             throw error;
         }
