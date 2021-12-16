@@ -34,7 +34,13 @@ $(document).ready(async function () {
 
     async function listShops() {
         try {
-            return await firebaseDatabase.list("shop");
+            const searched = sessionStorage.getItem(sessionStoraageSearch);
+            if (searched) {
+                sessionStorage.removeItem(sessionStoraageSearch);
+                return await shopFacade.listContain(searched);
+            } else {
+                return await firebaseDatabase.list("shop");
+            }
         } catch (error) {
             UTIL.showToastTreatError(error);
         }

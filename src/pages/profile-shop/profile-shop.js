@@ -6,7 +6,6 @@ $(document).ready(function () {
         const wrapperItemsOffered = $('#shop-items-offered');
         const wrapperBanner = document.getElementById('shop-banner');
         const shopName = $('#shop-name');
-        debugger;
         const shop = await loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID));
         const htmlDetails =
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.STATE, shop.state) +
@@ -15,7 +14,6 @@ $(document).ready(function () {
         wrapperDetails.html(htmlDetails);
         wrapperBanner.src = shop.banner ?? "./src/images/default-shop.jpg";
         shopName.html(shop.name);
-        debugger;
         const productHtmlDetails = await domRenderLocal.getHtmlItemsOffered(shop.id);
         wrapperItemsOffered.html(productHtmlDetails);
     }
@@ -36,7 +34,6 @@ $(document).ready(function () {
             `;
         },
         getHtmlItemsOffered: async function (shopId) {
-            debugger;
             let htmlDetails = "";
             const products = await productFacade.getProductList(shopId);
             for (const product of products) {

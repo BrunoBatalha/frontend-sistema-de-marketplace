@@ -39,8 +39,8 @@ $(document).ready(async function () {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navBarTarget">
-                    <form class="d-flex ms-auto me-3">
-                        <input class="form-control" type="search" placeholder="Procurar..." />
+                    <form class="d-flex ms-auto me-3" id="formSearch">
+                        <input class="form-control" type="search" id="formSearchInput" placeholder="Procurar..." />
                         <button class="btn btn-outline-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
@@ -102,4 +102,11 @@ $(document).ready(async function () {
             UTIL.showToastTreatError(error);
         }
     });
+
+    $("#formSearch").on("submit", function (ev) {
+        ev.preventDefault();
+        console.log($("#formSearchInput").val())
+        sessionStorage.setItem(sessionStoraageSearch, $("#formSearchInput").val());
+        UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
+    })
 });
