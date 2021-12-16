@@ -25,6 +25,7 @@ $(document).ready(async function () {
                 inputs.state.val(),
                 inputs.instagram.val(),
                 inputs.facebook.val(),
+                inputs.category.val()
             );
             await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_UPDATE, ENUMERATIONS.COLORS.SUCCESS);
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.MY_PROFILE);
@@ -45,6 +46,7 @@ $(document).ready(async function () {
             state: $("#selectState"),
             instagram: $("#inputInstagram"),
             facebook: $("#inputFacebook"),
+            category: $("#selectCategory"),
         };
     }
 

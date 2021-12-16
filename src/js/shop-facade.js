@@ -9,10 +9,11 @@ const _shop_facade_properties = {
     facebook: "facebook",
     _idUser: "_idUser",
     _idShop: "_idShop",
+    _idCategory: "_idCategory",
     banner: "banner"
 };
 const shopFacade = {
-    insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook) {
+    insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, _idCategory) {
         try {
             const data = {
                 [_shop_facade_properties.name]: name || "-",
@@ -22,7 +23,9 @@ const shopFacade = {
                 [_shop_facade_properties.state]: state || "-",
                 [_shop_facade_properties.instagram]: instagram || "-",
                 [_shop_facade_properties.facebook]: facebook || "-",
-                [_shop_facade_properties._idUser]: await getUserId()
+                [_shop_facade_properties._idUser]: await getUserId(),
+                [_shop_facade_properties.banner]: "",
+                [_shop_facade_properties._idCategory]: _idCategory || ""
             };
 
             await firebaseDatabase.writeDataRandomGuid(data, _SHOP_FACADE_REF);
@@ -77,7 +80,15 @@ const shopFacade = {
         }
     },
 
-    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath) {
+    listByCategory: async function (str) {
+        try {
+            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties._idCategory, str);
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, _idCategory) {
         try {
             const { id } = await this.getByUserId();
             const data = {
@@ -88,7 +99,8 @@ const shopFacade = {
                 [_shop_facade_properties.state]: state || "-",
                 [_shop_facade_properties.instagram]: instagram || "-",
                 [_shop_facade_properties.facebook]: facebook || "-",
-                [_shop_facade_properties.banner]: bannerPath
+                [_shop_facade_properties.banner]: bannerPath,
+                [_shop_facade_properties._idCategory]: _idCategory || "",
             };
 
             await firebaseDatabase.updateData(data, `${_SHOP_FACADE_REF}/${id}`);

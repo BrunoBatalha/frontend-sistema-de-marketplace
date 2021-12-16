@@ -9,6 +9,7 @@ const CONSTANTS = {
     MESSAGE_SUCCESS_LOGIN: "Login realizado com sucesso! Redirecionando...",
     SUCCESS: "Sucesso",
     SELECT_STATE: "Selecione o estado",
+    SELECT_CATEGORY: "Selecione a categoria",
     MY_SHOP: "Minha loja",
     ACCESS: "Acessos",
     SALES: "Vendas",
@@ -49,6 +50,13 @@ const CONSTANTS = {
     "São Paulo",
     "Sergipe",
     "Tocantins",
+  ],
+  CATEGORIES: [
+    "Artigos infantis",
+    "AutoPeças",
+    "Eletrônicos",
+    "Imóveis",
+    "Moda e beleza",
   ],
   URL_PARAMS: {
     SHOP_ID: "shopId",
