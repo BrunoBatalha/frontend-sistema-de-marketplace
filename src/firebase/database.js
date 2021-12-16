@@ -7,7 +7,10 @@ const firebaseDatabase = (() => {
         return new Promise((resolve, reject) => {
             database.ref(ref).on('value', (snapshot) => {
                 if (snapshot.val) {
-                    resolve(snapshot.val());
+                    resolve({
+                        id: snapshot.key,
+                        ...snapshot.val()
+                    });
                 } else {
                     resolve(snapshot);
                 }

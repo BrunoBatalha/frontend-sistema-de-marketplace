@@ -18,32 +18,45 @@
     <section class="mb-3">
         <div id="nav-links-component"></div>
     </section>
-
     <section class="mb-4">
-        <h2 class="container">Pilltover Shop</h2>
-
-        <div class="py-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6" id="shop-banner"></div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <h4>Classificação da loja</h4>
-                            <em class="bi bi-star-fill"></em>
-                            <em class="bi bi-star-fill"></em>
-                            <em class="bi bi-star-fill"></em>
-                            <em class="bi bi-star-fill"></em>
-                            <em class="bi bi-star-fill"></em>
+        <div class="container">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12 d-flex align-items-center justify-content-start">
+                            <h2 id="shop-name"></h2>
                         </div>
-                        <div id="shop-details"></div>
+                    </div>
 
-                        <div class="d-flex">
-                            <button type="button" class="btn btn-outline-primary" title="Compartilhar">
-                                <em class="bi bi-share"></em>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary ms-3" title="Salvar">
-                                <em class="bi bi-bookmark" title="Salvar"></em>
-                            </button>
+                </div>
+                <div class="card-body py-3">
+                    <div class="container">
+                        <div class="row gy-2">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                <label class="img-banner-container d-flex align-items-center justify-content-center">
+                                    <img id="shop-banner" width="100%" height="100%" class="img-banner" />
+                                </label>
+                            </div>
+                            <div class="col-md-8 d-flex flex-column justify-content-between">
+                                <div class="mb-3">
+                                    <h4>Classificação da loja</h4>
+                                    <em class="bi bi-star-fill"></em>
+                                    <em class="bi bi-star-fill"></em>
+                                    <em class="bi bi-star-fill"></em>
+                                    <em class="bi bi-star-fill"></em>
+                                    <em class="bi bi-star-fill"></em>
+                                </div>
+                                <div id="shop-details"></div>
+
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-outline-primary" title="Compartilhar">
+                                        <em class="bi bi-share"></em>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary ms-3" title="Salvar">
+                                        <em class="bi bi-bookmark" title="Salvar"></em>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,12 +64,23 @@
         </div>
     </section>
 
-
     <section class="mb-4">
-        <h2 class="container">Produtos e serviços oferecidos</h2>
-        <div>
-            <div class="container">
-                <div class="row py-3 g-3 mt-2" id="shop-items-offered"></div>
+        <div class="container">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12 d-flex align-items-center justify-content-start">
+                            Produtos e serviços oferecidos
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body py-3">
+                    <div class="container">
+                        <div class="row gy-2" id="shop-items-offered">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -79,6 +103,8 @@
     <script src="./src/js/constants-enumerations.js"></script>
     <script src="./src/js/config.js"></script>
     <script src="./src/js/components.js"></script>
+    <script src="./src/js/shop-facade.js"></script>
+    <script src="./src/js/product-facade.js"></script>
 
     <!-- PAGE SCRIPTS -->
     <script src="./src/pages/profile-shop/profile-shop.js"></script>

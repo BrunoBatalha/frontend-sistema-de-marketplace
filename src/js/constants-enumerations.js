@@ -15,6 +15,7 @@ const CONSTANTS = {
     INCOME_CURRENT_MONTH: "Rendimento do mês atual",
     INCOME_LAST_MONTH: "Rendimento do último mês",
     COMERCIAL_PHONE: "Telefone comercial",
+    STATE: "Estado",
     INSTAGRAM: "Instagram",
     FACEBOOK: "Facebook",
   },

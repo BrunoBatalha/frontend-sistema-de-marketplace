@@ -1,53 +1,27 @@
 $(document).ready(function () {
     fillProfileShop();
 
-    function fillProfileShop() {
+    async function fillProfileShop() {
         const wrapperDetails = $('#shop-details');
-        const wrapperBanner = $('#shop-banner');
         const wrapperItemsOffered = $('#shop-items-offered');
-        loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID)).then(shop => {
-            const htmlDetails =
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.ADDRESS, shop.address) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.OWNER, shop.owner) +
-                UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.typesOfProducts);
-            wrapperDetails.html(htmlDetails);
-            wrapperBanner.html(domRenderLocal.getHtmlBanner(shop.image))
-            wrapperItemsOffered.html(domRenderLocal.getHtmlItemsOffered(shop.items));
-        })
+        const wrapperBanner = document.getElementById('shop-banner');
+        const shopName = $('#shop-name');
+        debugger;
+        const shop = await loadMock(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID));
+        const htmlDetails =
+            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.STATE, shop.state) +
+            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
+            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.productTypes);
+        wrapperDetails.html(htmlDetails);
+        wrapperBanner.src = shop.banner ?? "./src/images/default-shop.jpg";
+        shopName.html(shop.name);
+        debugger;
+        const productHtmlDetails = await domRenderLocal.getHtmlItemsOffered(shop.id);
+        wrapperItemsOffered.html(productHtmlDetails);
     }
 
-    function loadMock() {
-        return new Promise(function (resolve) {
-            resolve({
-                image: `https://via.placeholder.com/300x300.png/09f/fff?text=lojacarregada`,
-                address: "Rua Rio Javaria, 361",
-                owner: "Jayce Talis",
-                typesOfProducts: "Cama, mesa e banho",
-                name: "Pilltover Shop",
-                items: [
-                    {
-                        name: "Caixa Hextec",
-                        image: "https://via.placeholder.com/150.png/09f/fff?text=produto"
-                    },
-                    {
-                        name: "Caixa Hextec1",
-                        image: "https://via.placeholder.com/150.png/09f/fff?text=produto"
-                    },
-                    {
-                        name: "Caixa Hextec2",
-                        image: "https://via.placeholder.com/150.png/09f/fff?text=produto"
-                    },
-                    {
-                        name: "Caixa Hextec3",
-                        image: "https://via.placeholder.com/150.png/09f/fff?text=produto"
-                    },
-                    {
-                        name: "Caixa Hextec4",
-                        image: "https://via.placeholder.com/150.png/09f/fff?text=produto"
-                    },
-                ]
-            });
-        })
+    async function loadMock(shopId) {
+        return await shopFacade.getShop(shopId);
     }
 
     function getParamUrl(param) {
@@ -58,20 +32,18 @@ $(document).ready(function () {
     const domRenderLocal = {
         getHtmlBanner: function (imageUrl) {
             return `
-                <img  src="${imageUrl}" class="w-100 mb-2">
+                <img src="${imageUrl}" class="w-100 mb-2">
             `;
         },
-        getHtmlItemsOffered: function (products) {
-            return products.reduce((accumulator, product) => {
-                return `${accumulator}
-                    <a href="profile-product.html" class="col-lg-3 col-md-4 col-sm-6 bg-transparent">
-                        <img class="card-img-top" src="${product.image}">
-                        <div class="card-body bg-white">
-                            <p class="card-title text-center">${product.name}</p>
-                        </div>
-                    </a>
-                `;
-            }, "")
+        getHtmlItemsOffered: async function (shopId) {
+            debugger;
+            let htmlDetails = "";
+            const products = await productFacade.getProductList(shopId);
+            for (const product of products) {
+                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
+            }
+
+            return htmlDetails;
         }
-    }
+    };
 });

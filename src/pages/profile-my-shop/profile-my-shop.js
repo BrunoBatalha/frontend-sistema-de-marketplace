@@ -26,15 +26,10 @@ $(document).ready(async function () {
     async function fillMyProductsFields() {
         const wrapperDetails = $("#my-products");
         try {
-            debugger;
             let htmlDetails = "";
             const products = await productFacade.getProductList();
-            if (!products) {
-                htmlDetails = "<h2>Não há produtos cadastrados</h2>";
-            } else {
-                for (const product of products) {
-                    htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
-                }
+            for (const product of products) {
+                htmlDetails += UTIL.domRender.getCardProductDetail(product.name, product.description, product.price, product.image1 ?? product.image2);
             }
 
             wrapperDetails.html(htmlDetails);

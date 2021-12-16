@@ -33,9 +33,13 @@ const productFacade = {
         }
     },
 
-    getProductList: async function () {
+    getProductList: async function (shopId = null) {
         try {
-            const { id } = await this.getByUserId();
+            let id = shopId;
+            if (!shopId) {
+                const shop = await this.getByUserId();
+                id = shop.id;
+            }
             const entity = await firebaseDatabase.getListBy(_PRODUCT_FACADE_REF, _product_facade_properties._idShop, id);
             return entity;
         } catch (error) {

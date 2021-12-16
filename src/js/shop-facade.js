@@ -8,6 +8,7 @@ const _shop_facade_properties = {
     instagram: "instagram",
     facebook: "facebook",
     _idUser: "_idUser",
+    _idShop: "_idShop",
     banner: "banner"
 };
 const shopFacade = {
@@ -34,6 +35,14 @@ const shopFacade = {
     hasUserShop: async function () {
         try {
             return !!(await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await getUserId()));
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getShop: async function (shopId) {
+        try {
+            return await firebaseDatabase.readData(`${_SHOP_FACADE_REF}/${shopId}`);
         } catch (error) {
             throw error;
         }
