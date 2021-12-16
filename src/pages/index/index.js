@@ -64,6 +64,7 @@ $(document).ready(async function () {
             if (filteredByCategory) {
                 return await productFacade.listByCategory(filteredByCategory);
             }
+            return await firebaseDatabase.list("products");
         } catch (error) {
             UTIL.showToastTreatError(error);
         }
