@@ -32,7 +32,13 @@ const productFacade = {
             throw error;
         }
     },
-
+    listContain: async function (str) {
+        try {
+            return await firebaseDatabase.listContains(_PRODUCT_FACADE_REF, _product_facade_properties.name, str);
+        } catch (error) {
+            throw error;
+        }
+    },
     getProductList: async function (shopId = null) {
         try {
             let id = shopId;
