@@ -1,4 +1,6 @@
 $(document).ready(async function () {
+    const itemSearched = sessionStorage.getItem(sessionStoraageSearch);
+    sessionStorage.removeItem(sessionStoraageSearch);
     await fillItemsCarousel();
 
     async function fillItemsCarousel() {
@@ -34,7 +36,11 @@ $(document).ready(async function () {
 
     async function listShops() {
         try {
-            return await firebaseDatabase.list("shop");
+            if (itemSearched) {
+                return await shopFacade.listContain(itemSearched);
+            } else {
+                return await firebaseDatabase.list("shop");
+            }
         } catch (error) {
             UTIL.showToastTreatError(error);
         }
@@ -42,7 +48,11 @@ $(document).ready(async function () {
 
     async function listProduct() {
         try {
-            return await firebaseDatabase.list("products");
+            if (itemSearched) {
+                return await productFacade.listContain(itemSearched);
+            } else {
+                return await firebaseDatabase.list("products");
+            }
         } catch (error) {
             UTIL.showToastTreatError(error);
         }

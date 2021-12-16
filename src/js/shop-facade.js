@@ -70,6 +70,14 @@ const shopFacade = {
         }
     },
 
+    listContain: async function (str) {
+        try {
+            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties.name, str);
+        } catch (error) {
+            throw error;
+        }
+    },
+
     update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath) {
         try {
             const { id } = await this.getByUserId();
