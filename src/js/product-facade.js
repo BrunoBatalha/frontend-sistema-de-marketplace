@@ -91,7 +91,7 @@ const productFacade = (function () {
 
     const getByUserId = async function () {
         try {
-            return await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await _getUserId());
+            return await firebaseDatabase.getBy(_shopRef, _shopPropertiesInDatabase._idUser, await _getUserId());
         } catch (error) {
             throw error;
         }

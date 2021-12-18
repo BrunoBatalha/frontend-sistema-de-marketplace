@@ -1,12 +1,20 @@
 $(document).ready(function () {
+    const shopId = UTIL.getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID);
     fillProfileShop();
+    countAccess();
+
+
+    function countAccess() {
+        shopFacade.updateAccess(shopId);
+    }
 
     async function fillProfileShop() {
+        debugger
         const wrapperDetails = $('#shop-details');
         const wrapperItemsOffered = $('#shop-items-offered');
         const wrapperBanner = document.getElementById('shop-banner');
         const shopName = $('#shop-name');
-        const shop = await loadShopProfile(getParamUrl(CONSTANTS.URL_PARAMS.SHOP_ID));
+        const shop = await loadShopProfile();
         const htmlDetails =
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.STATE, shop.state) +
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
@@ -18,13 +26,8 @@ $(document).ready(function () {
         wrapperItemsOffered.html(productHtmlDetails);
     }
 
-    async function loadShopProfile(shopId) {
+    async function loadShopProfile() {
         return await shopFacade.getShop(shopId);
-    }
-
-    function getParamUrl(param) {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(param);
     }
 
     const domRenderLocal = {
@@ -33,7 +36,7 @@ $(document).ready(function () {
                 <img src="${imageUrl}" class="w-100 mb-2">
             `;
         },
-        getHtmlItemsOffered: async function (shopId) {
+        getHtmlItemsOffered: async function () {
             let htmlDetails = "";
             const products = await productFacade.getProductList(shopId);
             for (const product of products) {

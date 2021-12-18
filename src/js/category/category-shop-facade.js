@@ -15,7 +15,14 @@ const categoryShopFacade = (function () {
             throw error;
         }
     }
-    
+    async function getById(id) {
+        const name = CONSTANTS.CATEGORIES.find((c, index) => index.toString() === id.toString())
+        if (name) {
+            return getByName(name);
+        }
+        return null;
+    }
+
     // async function insert(name) {
     //     try {
     //         const id = await firebaseDatabase.insertWithRandomGuid(_categoryShopRef, {
@@ -43,7 +50,8 @@ const categoryShopFacade = (function () {
     return {
         getByName,
         // insert,
-        list
+        list,
+        getById
     }
 
 })()

@@ -1,5 +1,5 @@
-const _SHOP_FACADE_REF = "shop";
-const _shop_facade_properties = {
+const _shopRef = "shop";
+const _shopPropertiesInDatabase = {
     name: "name",
     cnpj: "cnpj",
     comercialPhone: "comercialPhone",
@@ -10,7 +10,8 @@ const _shop_facade_properties = {
     _idUser: "_idUser",
     _idShop: "_idShop",
     _idCategory: "_idCategory",
-    banner: "banner"
+    banner: "banner",
+    access: "access"
 };
 const shopFacade = {
     insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, categoryName) {
@@ -21,19 +22,20 @@ const shopFacade = {
             }
 
             const data = {
-                [_shop_facade_properties.name]: name || "-",
-                [_shop_facade_properties.cnpj]: cnpj || "-",
-                [_shop_facade_properties.comercialPhone]: comercialPhone || "-",
-                [_shop_facade_properties.productTypes]: productTypes || "-",
-                [_shop_facade_properties.state]: state || "-",
-                [_shop_facade_properties.instagram]: instagram || "-",
-                [_shop_facade_properties.facebook]: facebook || "-",
-                [_shop_facade_properties._idUser]: await getUserId(),
-                [_shop_facade_properties.banner]: "",
-                [_shop_facade_properties._idCategory]: category.id || ""
+                [_shopPropertiesInDatabase.name]: name || "-",
+                [_shopPropertiesInDatabase.cnpj]: cnpj || "-",
+                [_shopPropertiesInDatabase.comercialPhone]: comercialPhone || "-",
+                [_shopPropertiesInDatabase.productTypes]: productTypes || "-",
+                [_shopPropertiesInDatabase.state]: state || "-",
+                [_shopPropertiesInDatabase.instagram]: instagram || "-",
+                [_shopPropertiesInDatabase.facebook]: facebook || "-",
+                [_shopPropertiesInDatabase._idUser]: await getUserId(),
+                [_shopPropertiesInDatabase.banner]: "",
+                [_shopPropertiesInDatabase._idCategory]: category.id || "",
+                [_shopPropertiesInDatabase.access]: 0
             };
 
-            await firebaseDatabase.insertWithRandomGuid(_SHOP_FACADE_REF, data);
+            await firebaseDatabase.insertWithRandomGuid(_shopRef, data);
         } catch (error) {
             throw error;
         }
@@ -41,7 +43,7 @@ const shopFacade = {
 
     hasUserShop: async function () {
         try {
-            return !!(await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await getUserId()));
+            return !!(await firebaseDatabase.getBy(_shopRef, _shopPropertiesInDatabase._idUser, await getUserId()));
         } catch (error) {
             throw error;
         }
@@ -49,7 +51,10 @@ const shopFacade = {
 
     getShop: async function (shopId) {
         try {
-            return await firebaseDatabase.readData(`${_SHOP_FACADE_REF}/${shopId}`);
+            debugger
+            const entity = await firebaseDatabase.readData(`${_shopRef}/${shopId}`);
+            const category = await categoryShopFacade.getById(entity[_shopPropertiesInDatabase._idCategory])
+            return { ...entity, category }
         } catch (error) {
             throw error;
         }
@@ -57,7 +62,7 @@ const shopFacade = {
 
     getByUserId: async function () {
         try {
-            const entity = await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await getUserId());
+            const entity = await firebaseDatabase.getBy(_shopRef, _shopPropertiesInDatabase._idUser, await getUserId());
             return {
                 ...entity,
                 incomeCurrentMonth: await calculateIncomeCurrentMonth(),
@@ -71,7 +76,7 @@ const shopFacade = {
 
     list: async function () {
         try {
-            return await firebaseDatabase.list(_SHOP_FACADE_REF);
+            return await firebaseDatabase.list(_shopRef);
         } catch (error) {
             throw error;
         }
@@ -79,7 +84,7 @@ const shopFacade = {
 
     listContain: async function (str) {
         try {
-            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties.name, str);
+            return await firebaseDatabase.listContains(_shopRef, _shopPropertiesInDatabase.name, str);
         } catch (error) {
             throw error;
         }
@@ -87,13 +92,13 @@ const shopFacade = {
 
     listByCategory: async function (categoryId) {
         try {
-            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties._idCategory, categoryId);
+            return await firebaseDatabase.listContains(_shopRef, _shopPropertiesInDatabase._idCategory, categoryId);
         } catch (error) {
             throw error;
         }
     },
 
-    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, categoryName) {
+    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, categoryName, access) {
         try {
             let category = await categoryProductFacade.getByName(categoryName);
             if (!category) {
@@ -101,20 +106,33 @@ const shopFacade = {
             }
             const { id } = await this.getByUserId();
             const data = {
-                [_shop_facade_properties.name]: name || "-",
-                [_shop_facade_properties.cnpj]: cnpj || "-",
-                [_shop_facade_properties.comercialPhone]: comercialPhone || "-",
-                [_shop_facade_properties.productTypes]: productTypes || "-",
-                [_shop_facade_properties.state]: state || "-",
-                [_shop_facade_properties.instagram]: instagram || "-",
-                [_shop_facade_properties.facebook]: facebook || "-",
-                [_shop_facade_properties.banner]: bannerPath,
-                [_shop_facade_properties._idCategory]: category.id || "",
+                [_shopPropertiesInDatabase.name]: name || "-",
+                [_shopPropertiesInDatabase.cnpj]: cnpj || "-",
+                [_shopPropertiesInDatabase.comercialPhone]: comercialPhone || "-",
+                [_shopPropertiesInDatabase.productTypes]: productTypes || "-",
+                [_shopPropertiesInDatabase.state]: state || "-",
+                [_shopPropertiesInDatabase.instagram]: instagram || "-",
+                [_shopPropertiesInDatabase.facebook]: facebook || "-",
+                [_shopPropertiesInDatabase.banner]: bannerPath,
+                [_shopPropertiesInDatabase._idCategory]: category.id || "",
+                [_shopPropertiesInDatabase.access]: access
             };
 
-            await firebaseDatabase.updateData(data, `${_SHOP_FACADE_REF}/${id}`);
+            await firebaseDatabase.updateData(data, `${_shopRef}/${id}`);
         } catch (error) {
             throw error;
+        }
+    },
+
+    updateAccess: async function (id) {
+        try {
+            const entity = await this.getShop(id);
+            const newAccess = (entity.access ?? 0) + 1;
+            await firebaseDatabase.updateData({
+                access: newAccess
+            }, `${_shopRef}/${id}`)
+        } catch (error) {
+            throw error
         }
     }
 
