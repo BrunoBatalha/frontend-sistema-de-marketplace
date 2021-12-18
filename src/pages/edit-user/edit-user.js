@@ -112,7 +112,6 @@ $(document).ready(async function () {
     }
 
     async function getImagesData(user) {
-        debugger;
         if (!currentSelectedImg) {
             return user.images;
         }

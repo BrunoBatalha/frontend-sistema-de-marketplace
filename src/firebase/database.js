@@ -24,8 +24,9 @@ const firebaseDatabase = (() => {
         return database.ref(ref).set(data);
     };
 
-    const writeDataRandomGuid = async (data = {}, ref = "/") => {
-        return database.ref(ref).push(data);
+    const insertWithRandomGuid = async (ref, data) => {
+        _checkProps(ref, data)
+        return database.ref(ref).push(data).then(snap => snap.key, err => err);
     };
 
     const updateData = async (data = {}, ref = "/") => {
@@ -50,7 +51,7 @@ const firebaseDatabase = (() => {
     };
 
     const getBy = (ref = "/", by, equalTo) => {
-        checkProps(by, equalTo);
+        _checkProps(by, equalTo);
         return new Promise(async (resolve, reject) => {
             database.ref(ref).orderByChild(by).equalTo(equalTo).limitToFirst(1).on('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
@@ -66,8 +67,14 @@ const firebaseDatabase = (() => {
         });
     };
 
+    const getByInMemory = async (ref, by, equalTo) => {
+        _checkProps(ref, by, equalTo);
+        const entities = await list(ref);
+        return entities.find(e => e[by].toUpperCase() === equalTo.toUpperCase()) || null
+    }
+
     const getListBy = (ref = "/", by, equalTo) => {
-        checkProps(by, equalTo);
+        _checkProps(by, equalTo);
         return new Promise(async (resolve, reject) => {
             database.ref(ref).orderByChild(by).equalTo(equalTo).on('value', function (snapshot) {
                 const list = [];
@@ -90,6 +97,11 @@ const firebaseDatabase = (() => {
         }, err => err)
     };
 
+    const listByInMemory = async (ref, by, equalTo) => {
+        _checkProps(ref, by, equalTo);
+        const entities = await list(ref);
+        return entities.filter(e => e[by] === equalTo)
+    }
 
 
     const list = (ref) => {
@@ -109,25 +121,28 @@ const firebaseDatabase = (() => {
         });
     };
 
+
+    function _checkProps(...props) {
+        props.forEach(p => {
+            if (!p) {
+                console.error(new Error());
+            }
+        });
+    }
     return {
         readData,
         writeData,
-        writeDataRandomGuid,
+        insertWithRandomGuid,
         updateData,
         deleteData,
         loadUserData,
         getBy,
         getListBy,
         list,
-        listContains
+        insertWithRandomGuid,
+
+        listContains,
+        getByInMemory,
+        listByInMemory,
     };
 })();
-
-function checkProps(...props) {
-    props.forEach(p => {
-        if (!p) {
-            console.error(new Error());
-        }
-    });
-
-}

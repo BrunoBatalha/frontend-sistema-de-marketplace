@@ -13,8 +13,13 @@ const _shop_facade_properties = {
     banner: "banner"
 };
 const shopFacade = {
-    insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, _idCategory) {
+    insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, categoryName) {
         try {
+            let category = await categoryProductFacade.getByName(categoryName);
+            if (!category) {
+                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND
+            }
+
             const data = {
                 [_shop_facade_properties.name]: name || "-",
                 [_shop_facade_properties.cnpj]: cnpj || "-",
@@ -25,10 +30,10 @@ const shopFacade = {
                 [_shop_facade_properties.facebook]: facebook || "-",
                 [_shop_facade_properties._idUser]: await getUserId(),
                 [_shop_facade_properties.banner]: "",
-                [_shop_facade_properties._idCategory]: _idCategory || ""
+                [_shop_facade_properties._idCategory]: category.id || ""
             };
 
-            await firebaseDatabase.writeDataRandomGuid(data, _SHOP_FACADE_REF);
+            await firebaseDatabase.insertWithRandomGuid(_SHOP_FACADE_REF, data);
         } catch (error) {
             throw error;
         }
@@ -80,16 +85,20 @@ const shopFacade = {
         }
     },
 
-    listByCategory: async function (str) {
+    listByCategory: async function (categoryId) {
         try {
-            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties._idCategory, str);
+            return await firebaseDatabase.listContains(_SHOP_FACADE_REF, _shop_facade_properties._idCategory, categoryId);
         } catch (error) {
             throw error;
         }
     },
 
-    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, _idCategory) {
+    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, categoryName) {
         try {
+            let category = await categoryProductFacade.getByName(categoryName);
+            if (!category) {
+                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND
+            }
             const { id } = await this.getByUserId();
             const data = {
                 [_shop_facade_properties.name]: name || "-",
@@ -100,7 +109,7 @@ const shopFacade = {
                 [_shop_facade_properties.instagram]: instagram || "-",
                 [_shop_facade_properties.facebook]: facebook || "-",
                 [_shop_facade_properties.banner]: bannerPath,
-                [_shop_facade_properties._idCategory]: _idCategory || "",
+                [_shop_facade_properties._idCategory]: category.id || "",
             };
 
             await firebaseDatabase.updateData(data, `${_SHOP_FACADE_REF}/${id}`);

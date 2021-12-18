@@ -20,7 +20,8 @@ const CONSTANTS = {
     INSTAGRAM: "Instagram",
     FACEBOOK: "Facebook",
     DESCRIPTION: "Description",
-    PRICE: "Valor"
+    PRICE: "Valor",
+    REPORT_PRODUCT_CATEGORY: "Informa a categoria do produto."
   },
   STATES: [
     "Acre",
@@ -83,6 +84,9 @@ const CONSTANTS = {
       EDIT_USER: "edit-user",
       CREATE_SHOP: "create-shop",
       MY_SHOP: "profile-my-shop",
+      LIST_PRODUCTS: "list-products",
+      LIST_SHOPS: "list-shops",
+      PROFILE_PRODUCT: "profile-product",
     },
   },
 };
@@ -129,7 +133,8 @@ const MESSAGES = {
     USER_ALREADY_LOGGED: "Usuário já logado!",
     ERROR_ON_LOAD_DATA: "Erro inesperado ao carregar dados",
     ERROR_ON_UPLOAD_FILE: "Erro ao fazer o upload do arquivo",
-    FILE_SELECTED_MUST_BE_IMAGE: "O arquivo selecionado deve ser uma imagem"
+    FILE_SELECTED_MUST_BE_IMAGE: "O arquivo selecionado deve ser uma imagem",
+    CATEGORY_NOT_FOUND: "Categoria não encontrada."
   }
 };
 

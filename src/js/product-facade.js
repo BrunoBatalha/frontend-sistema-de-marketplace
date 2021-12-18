@@ -1,106 +1,128 @@
-const _PRODUCT_FACADE_REF = "products";
-const _SHOP_REF = "shop";
-const _product_facade_properties = {
-    _idUser: "_idUser",
-    _idShop: "_idShop",
-    name: "name",
-    description: "description",
-    price: "price",
-    image1: "image1",
-    image2: "image2",
-    _idCategory: "_idCategory"
-};
-const productFacade = {
-    insert: async function (_idShop, name = '', description = '', price = 0) {
+const productFacade = (function () {
+    const _productRef = "products";
+    const _productPropertiesInDatabase = {
+        _idUser: "_idUser",
+        _idShop: "_idShop",
+        name: "name",
+        description: "description",
+        price: "price",
+        image1: "image1",
+        image2: "image2",
+        _idCategory: "_idCategory"
+    };
+
+    async function _getUserId() {
+        const userUid = await firebaseAuth.getUid();
+        if (!userUid) {
+            throw { code: "USER_NOT_LOGGED" };
+        }
+        return userUid;
+    }
+
+    const insert = async function (_idShop, name = '', description = '', price = 0, categoryName) {
         try {
+            let category = await categoryProductFacade.getByName(categoryName);
+            if (!category) {
+                category = await categoryProductFacade.insert(categoryName);
+            }
             const data = {
-                [_product_facade_properties._idShop]: _idShop,
-                [_product_facade_properties.name]: name,
-                [_product_facade_properties.description]: description,
-                [_product_facade_properties.price]: price
+                [_productPropertiesInDatabase._idShop]: _idShop,
+                [_productPropertiesInDatabase.name]: name,
+                [_productPropertiesInDatabase.description]: description,
+                [_productPropertiesInDatabase.price]: price,
+                [_productPropertiesInDatabase._idCategory]: category.id
             };
 
-            return await firebaseDatabase.writeDataRandomGuid(data, _PRODUCT_FACADE_REF);
+            const id = await firebaseDatabase.insertWithRandomGuid(_productRef, data);
+            return {
+                id, ...data
+            }
         } catch (error) {
             throw error;
         }
-    },
+    }
 
-    list: async function () {
+    const list = async function () {
         try {
-            return await firebaseDatabase.list(_PRODUCT_FACADE_REF);
+            return await firebaseDatabase.list(_productRef);
         } catch (error) {
             throw error;
         }
-    },
-    listContain: async function (str) {
+    }
+
+    const listContain = async function (str) {
         try {
-            return await firebaseDatabase.listContains(_PRODUCT_FACADE_REF, _product_facade_properties.name, str);
+            return await firebaseDatabase.listContains(_productRef, _productPropertiesInDatabase.name, str);
         } catch (error) {
             throw error;
         }
-    },
-    listByCategory: async function (str) {
+    }
+
+    const listByCategory = async function (_idCategory) {
         try {
-            return await firebaseDatabase.listContains(_PRODUCT_FACADE_REF, _product_facade_properties._idCategory, str);
+            return await firebaseDatabase.listByInMemory(_productRef, _productPropertiesInDatabase._idCategory, _idCategory);
         } catch (error) {
             throw error;
         }
-    },
-    getProductList: async function (shopId = null) {
+    }
+
+    const getProductList = async function (shopId = null) {
         try {
             let id = shopId;
             if (!shopId) {
                 const shop = await this.getByUserId();
                 id = shop.id;
             }
-            const entity = await firebaseDatabase.getListBy(_PRODUCT_FACADE_REF, _product_facade_properties._idShop, id);
+            const entity = await firebaseDatabase.getListBy(_productRef, _productPropertiesInDatabase._idShop, id);
             return entity;
         } catch (error) {
             throw error;
         }
-    },
+    }
 
-    getProduct: async function (productId) {
+    const getProduct = async function (productId) {
         try {
-            return await firebaseDatabase.readData(`${_PRODUCT_FACADE_REF}/${productId}`);
+            return await firebaseDatabase.readData(`${_productRef}/${productId}`);
         } catch (error) {
             throw error;
         }
-    },
+    }
 
 
-    getByUserId: async function () {
+    const getByUserId = async function () {
         try {
-            return await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await getUserId());
+            return await firebaseDatabase.getBy(_SHOP_FACADE_REF, _shop_facade_properties._idUser, await _getUserId());
         } catch (error) {
             throw error;
         }
-    },
+    }
 
-    update: async function (id, _idShop, name = '', description = '', price = 0, image1 = null, image2 = null) {
+    const update = async function (id, _idShop, name = '', description = '', price = 0, image1 = null, image2 = null, _idCategory) {
         try {
             const data = {
-                [_product_facade_properties._idShop]: _idShop,
-                [_product_facade_properties.name]: name,
-                [_product_facade_properties.description]: description,
-                [_product_facade_properties.price]: price,
-                [_product_facade_properties.image1]: image1,
-                [_product_facade_properties.image2]: image2,
+                [_productPropertiesInDatabase._idShop]: _idShop,
+                [_productPropertiesInDatabase.name]: name,
+                [_productPropertiesInDatabase.description]: description,
+                [_productPropertiesInDatabase.price]: price,
+                [_productPropertiesInDatabase.image1]: image1,
+                [_productPropertiesInDatabase.image2]: image2,
+                [_productPropertiesInDatabase._idCategory]: _idCategory
             };
 
-            await firebaseDatabase.updateData(data, `${_PRODUCT_FACADE_REF}/${id}`);
+            await firebaseDatabase.updateData(data, `${_productRef}/${id}`);
         } catch (error) {
             throw error;
         }
     }
 
-};
-
-async function getUserId() {
-    const userUid = await firebaseAuth.getUid();
-    if (!userUid) {
-        throw { code: "USER_NOT_LOGGED" };
+    return {
+        insert,
+        update,
+        list,
+        listByCategory,
+        listContain,
+        getProductList,
+        getProduct,
+        getByUserId
     }
-    return userUid;
-}
+})()

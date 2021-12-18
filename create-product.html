@@ -28,6 +28,13 @@
             <label for="inputPrice">Preço</label>
         </div>
 
+        <select class="form-select mb-3 form__select" id="selectCategoryProduct"></select>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="inputCustomCategory" placeholder="_blank">
+            <label for="inputCustomCategory">Categoria customizada</label>
+        </div>
+
         <div class="mb-3">
             <label for="inputDescription">Descrição</label>
             <textarea class="form-control" id="inputDescription" rows="5" required></textarea>
@@ -78,16 +85,18 @@
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 
     <!-- CUSTOM SCRIPTS ESSENTIALS -->
-    <script src="./src/js/constants-enumerations.js"></script>
-    <script src="./src/js/utils.js"></script>
     <script src="./src/firebase/instance.js"></script>
     <script src="./src/firebase/database.js"></script>
     <script src="./src/firebase/storage.js"></script>
     <script src="./src/firebase/auth.js"></script>
+    <script src="./src/js/constants-enumerations.js"></script>
+    <script src="./src/js/utils.js"></script>
     <script src="./src/js/config.js"></script>
-    <script src="./src/js/components.js"></script>
+    <script src="./src/js/category/category-factory.js"></script>
+    <script src="./src/js/category/category-product-facade.js"></script>
     <script src="./src/js/shop-facade.js"></script>
     <script src="./src/js/product-facade.js"></script>
+    <script src="./src/js/components.js"></script>
 
     <!-- PAGE SCRIPTS -->
     <script src="./src/pages/create-product/create-product.js"></script>
