@@ -50,6 +50,34 @@ const UTIL = {
     return params[key];
   },
 
+  orderProductsByStateUser: async function (list) {
+    const user = await firebaseDatabase.loadUserData();
+    const stateUser = user.state.toUpperCase();
+    const onlyitemsStateUser = []
+    const otherItems = []
+    for (const item of list) {
+      if (item.shop.state.toUpperCase() === stateUser) {
+        onlyitemsStateUser.push(item)
+      } else {
+        otherItems.push(item);
+      }
+    }
+    return [...onlyitemsStateUser, ...otherItems];
+  },
+  orderByStateUser: async function (list) {
+    const user = await firebaseDatabase.loadUserData();
+    const stateUser = user.state.toUpperCase();
+    const onlyShopsStateUser = []
+    const otherShops = []
+    for (const shop of list) {
+      if (shop.state.toUpperCase() === stateUser) {
+        onlyShopsStateUser.push(shop)
+      } else {
+        otherShops.push(shop);
+      }
+    }
+    return [...onlyShopsStateUser, ...otherShops];
+  },
   domRender: {
     getHtmlDetail: function (titleDetail, text) {
       return `
@@ -90,6 +118,26 @@ const UTIL = {
                           <h5 class="card-title">Nome: ${name}</h5>
                           <p class="card-text">Descrição: ${description}</p>
                           <p class="card-text"><small class="text-muted">Valor: R$ ${price}</small>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </a>`;
+    },
+    getCardShopDetailWithLink: function (id, name, commercialPhone, productTypes, image) {
+      return `
+      <a class="col-md-6 my-1" href="${CONSTANTS.SITE.PAGES.PROFILE_SHOP}.html?${CONSTANTS.URL_PARAMS.SHOP_ID}=${id}">
+          <div class="card-deck">
+              <div class="card">
+                  <div class="card-body row">
+                      <div class="col-md-4 min-img-product-container">
+                          <img id="img-banner" width="100%" height="100%" class="img-banner" src="${image}" />
+                      </div>
+                      <div class="col-md-8">
+                          <h5 class="card-title">Nome: ${name}</h5>
+                          <p class="card-text">Tipos de produtos: ${productTypes}</p>
+                          <p class="card-text"><small class="text-muted">Telefone comercial: ${commercialPhone}</small>
                           </p>
                       </div>
                   </div>

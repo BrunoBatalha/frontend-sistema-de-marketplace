@@ -51,7 +51,6 @@ const shopFacade = {
 
     getShop: async function (shopId) {
         try {
-            debugger
             const entity = await firebaseDatabase.readData(`${_shopRef}/${shopId}`);
             const category = await categoryShopFacade.getById(entity[_shopPropertiesInDatabase._idCategory])
             return { ...entity, category }
@@ -76,13 +75,15 @@ const shopFacade = {
 
     list: async function () {
         try {
-            return await firebaseDatabase.list(_shopRef);
+            const entities = await firebaseDatabase.list(_shopRef);
+            return UTIL.orderByStateUser(entities)
         } catch (error) {
             throw error;
         }
     },
 
     listContain: async function (str) {
+        // na verdade isso deveria ser listByName
         try {
             return await firebaseDatabase.listContains(_shopRef, _shopPropertiesInDatabase.name, str);
         } catch (error) {
@@ -92,7 +93,8 @@ const shopFacade = {
 
     listByCategory: async function (categoryId) {
         try {
-            return await firebaseDatabase.listContains(_shopRef, _shopPropertiesInDatabase._idCategory, categoryId);
+            const entities = await firebaseDatabase.listByInMemory(_shopRef, _shopPropertiesInDatabase._idCategory, categoryId);
+            return UTIL.orderByStateUser(entities)
         } catch (error) {
             throw error;
         }

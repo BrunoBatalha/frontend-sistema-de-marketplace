@@ -1,5 +1,6 @@
 const productFacade = (function () {
     const _productRef = "products";
+    const _shopRef = "shop";
     const _productPropertiesInDatabase = {
         _idUser: "_idUser",
         _idShop: "_idShop",
@@ -44,7 +45,17 @@ const productFacade = (function () {
 
     const list = async function () {
         try {
-            return await firebaseDatabase.list(_productRef);
+            const entities = await firebaseDatabase.list(_productRef);
+            const entitiesSorted = []
+            for (const entity of entities) {
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                entitiesSorted.push({
+                    ...entity,
+                    shop
+                })
+
+            }
+            return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }
@@ -52,7 +63,16 @@ const productFacade = (function () {
 
     const listContain = async function (str) {
         try {
-            return await firebaseDatabase.listContains(_productRef, _productPropertiesInDatabase.name, str);
+            const entities = await firebaseDatabase.listContains(_productRef, _productPropertiesInDatabase.name, str);
+            const entitiesSorted = []
+            for (const entity of entities) {
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                entitiesSorted.push({
+                    ...entity,
+                    shop
+                })
+            }
+            return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }
@@ -60,7 +80,16 @@ const productFacade = (function () {
 
     const listByCategory = async function (_idCategory) {
         try {
-            return await firebaseDatabase.listByInMemory(_productRef, _productPropertiesInDatabase._idCategory, _idCategory);
+            const entities = await firebaseDatabase.listByInMemory(_productRef, _productPropertiesInDatabase._idCategory, _idCategory);
+            const entitiesSorted = []
+            for (const entity of entities) {
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                entitiesSorted.push({
+                    ...entity,
+                    shop
+                })
+            }
+            return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }

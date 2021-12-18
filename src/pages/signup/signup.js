@@ -59,7 +59,8 @@ $(document).ready(function () {
         telephone: "",
         address: {},
         images: {},
-        points: 0
+        points: 0,
+        state: $("#selectState").val(),
       };
 
       const userUid = await firebaseAuth.getUid();

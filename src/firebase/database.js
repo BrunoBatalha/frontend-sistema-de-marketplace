@@ -100,7 +100,7 @@ const firebaseDatabase = (() => {
     const listByInMemory = async (ref, by, equalTo) => {
         _checkProps(ref, by, equalTo);
         const entities = await list(ref);
-        return entities.filter(e => e[by] === equalTo)
+        return entities.filter(e => e[by].toString().toLowerCase() === equalTo.toString().toLowerCase())
     }
 
 

@@ -13,6 +13,7 @@ $(document).ready(async function () {
             inputs.name.val(user.name);
             inputs.email.val(user.email);
             inputs.telephone.val(user.telephone);
+            inputs.state.val(user.state);
         } catch (error) {
             UTIL.showToastTreatError(error);
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.HOME);
@@ -60,7 +61,8 @@ $(document).ready(async function () {
         return {
             ...user,
             name: inputs.name.val(),
-            telephone: inputs.telephone.val()
+            telephone: inputs.telephone.val(),
+            state: inputs.state.val(),
         };
     }
 
@@ -69,6 +71,7 @@ $(document).ready(async function () {
             name: $("#inputName"),
             email: $("#inputEmail"),
             telephone: $("#inputTelephone"),
+            state: $("#selectState")
         };
     }
 

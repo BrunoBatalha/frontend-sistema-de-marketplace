@@ -49,7 +49,7 @@ $(document).ready(async function () {
                 return await shopFacade.listByCategory(filteredByCategory);
             }
 
-            return await firebaseDatabase.list("shop");
+            return await shopFacade.list();
 
         } catch (error) {
             UTIL.showToastTreatError(error);
@@ -61,10 +61,8 @@ $(document).ready(async function () {
             if (itemSearched) {
                 return await productFacade.listContain(itemSearched);
             }
-            if (filteredByCategory) {
-                return await productFacade.listByCategory(filteredByCategory);
-            }
-            return await firebaseDatabase.list("products");
+
+            return await productFacade.list();
         } catch (error) {
             UTIL.showToastTreatError(error);
         }

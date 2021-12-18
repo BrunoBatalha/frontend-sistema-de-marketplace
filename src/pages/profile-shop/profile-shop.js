@@ -9,7 +9,6 @@ $(document).ready(function () {
     }
 
     async function fillProfileShop() {
-        debugger
         const wrapperDetails = $('#shop-details');
         const wrapperItemsOffered = $('#shop-items-offered');
         const wrapperBanner = document.getElementById('shop-banner');

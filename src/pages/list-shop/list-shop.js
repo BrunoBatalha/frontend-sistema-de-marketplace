@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    fillProducts();
-    async function fillProducts() {
+    fillShops();
+    async function fillShops() {
         const wrapperDetails = $("#shops");
         try {
-            const products = await shopFacade.listByCategory(UTIL.getParamUrl(CONSTANTS.URL_PARAMS.CATEGORY_ID));
-            const htmlDetails = products.reduce((acc, product) => {
-                return acc + UTIL.domRender.getCardProductDetailWithLink(product.id, product.name, product.description, product.price, product.image1 ?? product.image2 ?? "./src/images/default-product.jpg");
+            const shops = await shopFacade.listByCategory(UTIL.getParamUrl(CONSTANTS.URL_PARAMS.CATEGORY_ID));
+            const htmlDetails = shops.reduce((acc, shop) => {
+                return acc + UTIL.domRender.getCardShopDetailWithLink(shop.id, shop.name, shop.comercialPhone, shop.productTypes, shop.image1 ?? shop.image2 ?? "./src/images/default-product.jpg");
             }, '')
 
             wrapperDetails.html(htmlDetails);
