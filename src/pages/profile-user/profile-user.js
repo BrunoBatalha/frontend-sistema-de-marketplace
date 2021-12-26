@@ -19,14 +19,19 @@ $(document).ready(async function () {
   }
 
   async function configureButtons() {
-    $('#btn-edit-informations').on('click', function () {
-      UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
-    });
+    try {
+      $('#btn-edit-informations').on('click', function () {
+        UTIL.redirectTo(CONSTANTS.SITE.PAGES.EDIT_USER, 0);
+      });
 
-    const has = await hasShopUser();
-    if (has) {
-      $('.btn-shop').html(CONSTANTS.LABELS.MY_SHOP);
-      $('.btn-shop').attr('href', CONSTANTS.SITE.PAGES.MY_SHOP + ".html");
+      const has = await hasShopUser();
+      if (has) {
+        $('.btn-shop').html(CONSTANTS.LABELS.MY_SHOP);
+        $('.btn-shop').attr('href', CONSTANTS.SITE.PAGES.MY_SHOP + ".html");
+      }
+    } catch (error) {
+      UTIL.showToast(UTIL.errorHandler(error));
+      UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
     }
   }
 
@@ -34,7 +39,7 @@ $(document).ready(async function () {
     try {
       return await shopFacade.hasUserShop();
     } catch (error) {
-      UTIL.showToast(UTIL.errorHandler(error));
+      throw error;
     }
   }
 

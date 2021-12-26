@@ -46,7 +46,7 @@ $(document).ready(function () {
                             ${category.name.toCapitalize()}
                         </a>
                     </li>`;
-        }, '')
+        }, '');
 
         $("#categoriesShop").append(htmlAppend);
     }
@@ -60,7 +60,7 @@ $(document).ready(function () {
                             ${category.name}
                         </a>
                     </li>`;
-        }, '')
+        }, '');
 
         $("#categoriesProduct").append(htmlAppend);
     }
@@ -90,7 +90,7 @@ $(document).ready(function () {
 
         configFormSearchNavBarComponent();
         configBtnLogoutNavBarComponent();
-        configShowBtnLoginNavBarComponent()
+        configShowBtnLoginNavBarComponent();
     }
 
     async function configShowBtnLoginNavBarComponent() {

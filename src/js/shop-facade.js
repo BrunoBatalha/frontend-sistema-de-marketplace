@@ -18,7 +18,7 @@ const shopFacade = {
         try {
             let category = await categoryProductFacade.getByName(categoryName);
             if (!category) {
-                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND
+                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND;
             }
 
             const data = {
@@ -52,8 +52,8 @@ const shopFacade = {
     getShop: async function (shopId) {
         try {
             const entity = await firebaseDatabase.readData(`${_shopRef}/${shopId}`);
-            const category = await categoryShopFacade.getById(entity[_shopPropertiesInDatabase._idCategory])
-            return { ...entity, category }
+            const category = await categoryShopFacade.getById(entity[_shopPropertiesInDatabase._idCategory]);
+            return { ...entity, category };
         } catch (error) {
             throw error;
         }
@@ -76,7 +76,7 @@ const shopFacade = {
     list: async function () {
         try {
             const entities = await firebaseDatabase.list(_shopRef);
-            return UTIL.orderByStateUser(entities)
+            return UTIL.orderByStateUser(entities);
         } catch (error) {
             throw error;
         }
@@ -94,7 +94,7 @@ const shopFacade = {
     listByCategory: async function (categoryId) {
         try {
             const entities = await firebaseDatabase.listByInMemory(_shopRef, _shopPropertiesInDatabase._idCategory, categoryId);
-            return UTIL.orderByStateUser(entities)
+            return UTIL.orderByStateUser(entities);
         } catch (error) {
             throw error;
         }
@@ -104,7 +104,7 @@ const shopFacade = {
         try {
             let category = await categoryProductFacade.getByName(categoryName);
             if (!category) {
-                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND
+                throw MESSAGES.GLOBAL.CATEGORY_NOT_FOUND;
             }
             const { id } = await this.getByUserId();
             const data = {
@@ -132,9 +132,9 @@ const shopFacade = {
             const newAccess = (entity.access ?? 0) + 1;
             await firebaseDatabase.updateData({
                 access: newAccess
-            }, `${_shopRef}/${id}`)
+            }, `${_shopRef}/${id}`);
         } catch (error) {
-            throw error
+            throw error;
         }
     }
 

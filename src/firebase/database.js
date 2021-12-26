@@ -25,7 +25,7 @@ const firebaseDatabase = (() => {
     };
 
     const insertWithRandomGuid = async (ref, data) => {
-        _checkProps(ref, data)
+        _checkProps(ref, data);
         return database.ref(ref).push(data).then(snap => snap.key, err => err);
     };
 
@@ -70,8 +70,8 @@ const firebaseDatabase = (() => {
     const getByInMemory = async (ref, by, equalTo) => {
         _checkProps(ref, by, equalTo);
         const entities = await list(ref);
-        return entities.find(e => e[by].toUpperCase() === equalTo.toUpperCase()) || null
-    }
+        return entities.find(e => e[by]?.toUpperCase() === equalTo?.toUpperCase()) || null;
+    };
 
     const getListBy = (ref = "/", by, equalTo) => {
         _checkProps(by, equalTo);
@@ -93,15 +93,15 @@ const firebaseDatabase = (() => {
 
     const listContains = (ref = "/", by, contains) => {
         return list(ref).then(items => {
-            return items.filter(_item => _item[by] && _item[by].toLowerCase().indexOf(contains.toLowerCase()) != -1)
-        }, err => err)
+            return items.filter(_item => _item[by] && _item[by].toLowerCase().indexOf(contains.toLowerCase()) != -1);
+        }, err => err);
     };
 
     const listByInMemory = async (ref, by, equalTo) => {
         _checkProps(ref, by, equalTo);
         const entities = await list(ref);
-        return entities.filter(e => e[by].toString().toLowerCase() === equalTo.toString().toLowerCase())
-    }
+        return entities.filter(e => e[by].toString().toLowerCase() === equalTo.toString().toLowerCase());
+    };
 
 
     const list = (ref) => {

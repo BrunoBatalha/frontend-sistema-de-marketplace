@@ -52,12 +52,12 @@ const UTIL = {
 
   orderProductsByStateUser: async function (list) {
     const user = await firebaseDatabase.loadUserData();
-    const stateUser = user.state.toUpperCase();
-    const onlyitemsStateUser = []
-    const otherItems = []
+    const stateUser = user.state?.toUpperCase();
+    const onlyitemsStateUser = [];
+    const otherItems = [];
     for (const item of list) {
-      if (item.shop.state.toUpperCase() === stateUser) {
-        onlyitemsStateUser.push(item)
+      if (item.shop.state?.toUpperCase() === stateUser) {
+        onlyitemsStateUser.push(item);
       } else {
         otherItems.push(item);
       }
@@ -66,12 +66,12 @@ const UTIL = {
   },
   orderByStateUser: async function (list) {
     const user = await firebaseDatabase.loadUserData();
-    const stateUser = user.state.toUpperCase();
-    const onlyShopsStateUser = []
-    const otherShops = []
+    const stateUser = user.state?.toUpperCase();
+    const onlyShopsStateUser = [];
+    const otherShops = [];
     for (const shop of list) {
-      if (shop.state.toUpperCase() === stateUser) {
-        onlyShopsStateUser.push(shop)
+      if (shop.state?.toUpperCase() === stateUser) {
+        onlyShopsStateUser.push(shop);
       } else {
         otherShops.push(shop);
       }

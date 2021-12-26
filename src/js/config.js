@@ -18,17 +18,17 @@ $(document).ready(function () {
 
   function setSelectState() {
     if ($('#selectState')) {
-      $('#selectState').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.STATES, CONSTANTS.LABELS.SELECT_STATE))
+      $('#selectState').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.STATES, CONSTANTS.LABELS.SELECT_STATE));
     }
   }
   function setSelectCategories() {
     if ($('#selectCategory')) {
-      $('#selectCategory').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.CATEGORIES, CONSTANTS.LABELS.SELECT_CATEGORY))
+      $('#selectCategory').html(UTIL.domRender.getHtmlOptionsSelect(CONSTANTS.CATEGORIES, CONSTANTS.LABELS.SELECT_CATEGORY));
     }
   }
 });
 
 
 String.prototype.toCapitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
+  return this.charAt(0)?.toUpperCase() + this.slice(1);
+};

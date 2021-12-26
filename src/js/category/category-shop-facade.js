@@ -3,7 +3,7 @@ const categoryShopFacade = (function () {
 
     async function getByName(name) {
         try {
-            const index = CONSTANTS.CATEGORIES.findIndex(c => c.toUpperCase() === name.toUpperCase())
+            const index = CONSTANTS.CATEGORIES.findIndex(c => c?.toUpperCase() === name?.toUpperCase());
             if (index != -1) {
                 return categoryFactory.create({
                     id: index,
@@ -16,7 +16,7 @@ const categoryShopFacade = (function () {
         }
     }
     async function getById(id) {
-        const name = CONSTANTS.CATEGORIES.find((c, index) => index.toString() === id.toString())
+        const name = CONSTANTS.CATEGORIES.find((c, index) => index.toString() === id.toString());
         if (name) {
             return getByName(name);
         }
@@ -41,7 +41,7 @@ const categoryShopFacade = (function () {
             return CONSTANTS.CATEGORIES.map((c, index) => categoryFactory.create({
                 id: index,
                 name: c
-            }))
+            }));
         } catch (error) {
             throw error;
         }
@@ -52,8 +52,8 @@ const categoryShopFacade = (function () {
         // insert,
         list,
         getById
-    }
+    };
 
-})()
+})();
 
 
