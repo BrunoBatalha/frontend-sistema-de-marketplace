@@ -83,7 +83,7 @@ const UTIL = {
   sendWhatsappMessage: function (phone, text) {
     try {
       const baseURI = this.getWhatsappBaseURL();
-      window.open(`${baseURI}?phone=${phone}&text=${text}`, "_blank");;
+      window.open(`${baseURI}?phone=${phone}&text=${text}`, "_blank");
       //const baseURI = `whatsapp:;//send/?1=pt_BR&phone=${phone}&text=${text}`;
       //window.location.assign(baseURI);
     } catch (error) {
