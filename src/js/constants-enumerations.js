@@ -127,6 +127,7 @@ const MESSAGES = {
     SUCCESSFULLY_SIGN_UP: "Cadastro realizado com sucesso",
     SUCCESSFULLY_UPDATE: "Informações alteradas com sucesso",
     ERROR_ON_LOAD_INFORMATIONS: "Falha ao carregar informações",
+    SUCCESSFULLY_SALE_CREATED: "Novo pedido de compra salvo com sucesso",
     UNKNOWN_ERROR: "Erro desconhecido",
     PASSWORDS_NOT_MATCH: "Senhas não coincidem",
     USER_NOT_LOGGED: "Erro ao acessar o conteúdo: usuário não logado",
@@ -139,4 +140,4 @@ const MESSAGES = {
 };
 
 
-const sessionStoraageSearch = "nomeDoItemPesquisado"
+const sessionStoraageSearch = "nomeDoItemPesquisado";

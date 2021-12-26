@@ -76,7 +76,6 @@ $(document).ready(async function () {
         event.preventDefault();
         UTIL.toggleDisableForm();
         try {
-            debugger;
             const quantity = $("#quantity").val() ?? 0;
             await saleFacade.insert(shop.id, userId, product.id, quantity, product.price);
 
@@ -89,8 +88,8 @@ $(document).ready(async function () {
             $('#form-request-product-sale').trigger("reset");
             $('#close-modal').click();
             setWhatsappFields();
+            await UTIL.showToast(MESSAGES.GLOBAL.SUCCESSFULLY_SALE_CREATED, ENUMERATIONS.COLORS.SUCCESS);
         } catch (error) {
-            debugger;
             UTIL.showToastTreatError(error);
         }
     });
