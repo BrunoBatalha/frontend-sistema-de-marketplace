@@ -4,12 +4,12 @@ const productFacade = (function () {
     const _productPropertiesInDatabase = {
         _idUser: "_idUser",
         _idShop: "_idShop",
+        _idCategory: "_idCategory",
         name: "name",
         description: "description",
         price: "price",
         image1: "image1",
         image2: "image2",
-        _idCategory: "_idCategory"
     };
 
     async function _getUserId() {
@@ -37,63 +37,63 @@ const productFacade = (function () {
             const id = await firebaseDatabase.insertWithRandomGuid(_productRef, data);
             return {
                 id, ...data
-            }
+            };
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const list = async function () {
         try {
             const entities = await firebaseDatabase.list(_productRef);
-            const entitiesSorted = []
+            const entitiesSorted = [];
             for (const entity of entities) {
-                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`);
                 entitiesSorted.push({
                     ...entity,
                     shop
-                })
+                });
 
             }
             return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const listContain = async function (str) {
         try {
             const entities = await firebaseDatabase.listContains(_productRef, _productPropertiesInDatabase.name, str);
-            const entitiesSorted = []
+            const entitiesSorted = [];
             for (const entity of entities) {
-                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`);
                 entitiesSorted.push({
                     ...entity,
                     shop
-                })
+                });
             }
             return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const listByCategory = async function (_idCategory) {
         try {
             const entities = await firebaseDatabase.listByInMemory(_productRef, _productPropertiesInDatabase._idCategory, _idCategory);
-            const entitiesSorted = []
+            const entitiesSorted = [];
             for (const entity of entities) {
-                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`)
+                const shop = await firebaseDatabase.readData(`${_shopRef}/${entity[_productPropertiesInDatabase._idShop]}`);
                 entitiesSorted.push({
                     ...entity,
                     shop
-                })
+                });
             }
             return UTIL.orderProductsByStateUser(entitiesSorted);
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const getProductList = async function (shopId = null) {
         try {
@@ -107,7 +107,7 @@ const productFacade = (function () {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const getProduct = async function (productId) {
         try {
@@ -115,7 +115,7 @@ const productFacade = (function () {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
 
     const getByUserId = async function () {
@@ -124,7 +124,7 @@ const productFacade = (function () {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     const update = async function (id, _idShop, name = '', description = '', price = 0, image1 = null, image2 = null, _idCategory) {
         try {
@@ -142,7 +142,7 @@ const productFacade = (function () {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     return {
         insert,
@@ -153,5 +153,5 @@ const productFacade = (function () {
         getProductList,
         getProduct,
         getByUserId
-    }
+    };
 })()

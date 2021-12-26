@@ -3,7 +3,6 @@ const _shopPropertiesInDatabase = {
     name: "name",
     cnpj: "cnpj",
     comercialPhone: "comercialPhone",
-    productTypes: "productTypes",
     state: "state",
     instagram: "instagram",
     facebook: "facebook",
@@ -14,7 +13,7 @@ const _shopPropertiesInDatabase = {
     access: "access"
 };
 const shopFacade = {
-    insert: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, categoryName) {
+    insert: async function (name, cnpj, comercialPhone, state, instagram, facebook, categoryName) {
         try {
             let category = await categoryProductFacade.getByName(categoryName);
             if (!category) {
@@ -25,7 +24,6 @@ const shopFacade = {
                 [_shopPropertiesInDatabase.name]: name || "-",
                 [_shopPropertiesInDatabase.cnpj]: cnpj || "-",
                 [_shopPropertiesInDatabase.comercialPhone]: comercialPhone || "-",
-                [_shopPropertiesInDatabase.productTypes]: productTypes || "-",
                 [_shopPropertiesInDatabase.state]: state || "-",
                 [_shopPropertiesInDatabase.instagram]: instagram || "-",
                 [_shopPropertiesInDatabase.facebook]: facebook || "-",
@@ -100,7 +98,7 @@ const shopFacade = {
         }
     },
 
-    update: async function (name, cnpj, comercialPhone, productTypes, state, instagram, facebook, bannerPath, categoryName, access) {
+    update: async function (name, cnpj, comercialPhone, state, instagram, facebook, bannerPath, categoryName, access) {
         try {
             let category = await categoryProductFacade.getByName(categoryName);
             if (!category) {
@@ -111,7 +109,6 @@ const shopFacade = {
                 [_shopPropertiesInDatabase.name]: name || "-",
                 [_shopPropertiesInDatabase.cnpj]: cnpj || "-",
                 [_shopPropertiesInDatabase.comercialPhone]: comercialPhone || "-",
-                [_shopPropertiesInDatabase.productTypes]: productTypes || "-",
                 [_shopPropertiesInDatabase.state]: state || "-",
                 [_shopPropertiesInDatabase.instagram]: instagram || "-",
                 [_shopPropertiesInDatabase.facebook]: facebook || "-",

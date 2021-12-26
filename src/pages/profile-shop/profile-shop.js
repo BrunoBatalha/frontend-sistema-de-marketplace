@@ -16,8 +16,7 @@ $(document).ready(function () {
         const shop = await loadShopProfile();
         const htmlDetails =
             UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.STATE, shop.state) +
-            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) +
-            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.productTypes);
+            UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone);
         wrapperDetails.html(htmlDetails);
         wrapperBanner.src = shop.banner != null && shop.banner != "" ? shop.banner : "./src/images/default-shop.jpg";
         shopName.html(shop.name);

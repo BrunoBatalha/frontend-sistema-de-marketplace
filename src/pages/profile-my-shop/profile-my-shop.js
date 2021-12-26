@@ -9,7 +9,6 @@ $(document).ready(async function () {
             const shop = await shopFacade.getByUserId();
             setImageProfile(shop);
             const htmlDetails =
-                (shop.productTypes ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.TYPES_OF_PRODUCTS, shop.productTypes) : "") +
                 (shop.comercialPhone ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.COMERCIAL_PHONE, shop.comercialPhone) : "") +
                 (shop.instagram ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.INSTAGRAM, shop.instagram) : "") +
                 (shop.facebook ? UTIL.domRender.getHtmlDetail(CONSTANTS.LABELS.FACEBOOK, shop.facebook) : "") +

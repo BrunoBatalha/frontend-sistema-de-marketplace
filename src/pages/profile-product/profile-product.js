@@ -1,14 +1,17 @@
 $(document).ready(async function () {
     var product = {};
-    var user = {};
+    var shop = {};
+    var userId = {};
 
     await loadEntities();
     await fillProfileProduct();
+    setWhatsappFields();
 
     async function loadEntities() {
         try {
-            user = await firebaseDatabase.loadUserData();
             product = await loadProductProfile(getParamUrl(CONSTANTS.URL_PARAMS.PRODUCT_ID));
+            shop = await shopFacade.getShop(product._idShop);
+            userId = await firebaseAuth.getUid();
         } catch (error) {
             UTIL.showToast(UTIL.errorHandler(error));
             UTIL.redirectTo(CONSTANTS.SITE.PAGES.LOGIN);
@@ -34,6 +37,19 @@ $(document).ready(async function () {
         return await productFacade.getProduct(productId);
     }
 
+    $("#checkboxSendWhatsapp").on("change", setWhatsappFields);
+
+    function setWhatsappFields() {
+        const sendWhatsappIsChecked = $("#checkboxSendWhatsapp").is(':checked');
+        if (sendWhatsappIsChecked) {
+            $("#message").attr("required", true);
+            $("#messageInput").show();
+        } else {
+            $("#message").attr("required", false);
+            $("#messageInput").hide();
+        }
+    }
+
     $("#quantity").on("change", setModalValues);
 
     function setModalValues() {
@@ -41,7 +57,7 @@ $(document).ready(async function () {
         if (quantity && quantity > 0) {
             const finalValue = (parseInt(quantity) * (product.price ? parseFloat(product.price) : 0)) ?? 0;
             $("#final-value").val(`R$ ${finalValue}`);
-            const message = `Olá, estou interessado no seu produto '${product.name}'.Gostaria de fazer o pedido de ${quantity} unidades`;
+            const message = `Olá, estou interessado no seu produto '${product.name}'. Gostaria de fazer o pedido de ${quantity} unidade(s)!`;
             $("#message").val(message);
         }
     }
@@ -56,8 +72,26 @@ $(document).ready(async function () {
         imgProduct.src = product.image1 ?? product.image2 ?? "./src/images/default-product.jpg";
     };
 
-    async function sendWhatsapp(phone, text) {
-        const baseURI = `whatsapp://send/?1=pt_BR&phone=${phone}&text=${text}`;
-        window.location.assign(baseURI);
-    }
+    $("#form-request-product-sale").on("submit", async function (event) {
+        event.preventDefault();
+        UTIL.toggleDisableForm();
+        try {
+            debugger;
+            const quantity = $("#quantity").val() ?? 0;
+            await saleFacade.insert(shop.id, userId, product.id, quantity, product.price);
+
+            const sendWhatsappIsChecked = $("#checkboxSendWhatsapp").is(':checked');
+            if (sendWhatsappIsChecked) {
+                const message = $("#message").val();
+                UTIL.sendWhatsappMessage(shop.comercialPhone, message);
+            }
+            UTIL.toggleDisableForm();
+            $('#form-request-product-sale').trigger("reset");
+            $('#close-modal').click();
+            setWhatsappFields();
+        } catch (error) {
+            debugger;
+            UTIL.showToastTreatError(error);
+        }
+    });
 });

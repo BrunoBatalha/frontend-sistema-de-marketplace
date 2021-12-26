@@ -15,7 +15,6 @@ $(document).ready(async function () {
             inputs.instagram.val(shop.instagram);
             inputs.facebook.val(shop.facebook);
             inputs.state.val(shop.state);
-            inputs.productTypes.val(shop.productTypes);
             inputs.category.val(shop._idCategory);
 
         } catch (error) {
@@ -38,7 +37,6 @@ $(document).ready(async function () {
                     inputs.name.val(),
                     inputs.cnpj.val(),
                     inputs.comercialPhone.val(),
-                    inputs.productTypes.val(),
                     inputs.state.val(),
                     inputs.instagram.val(),
                     inputs.facebook.val(),
@@ -68,7 +66,6 @@ $(document).ready(async function () {
             name: $("#inputName"),
             cnpj: $("#inputCnpj"),
             comercialPhone: $("#inputComercialPhone"),
-            productTypes: $("#inputProductTypes"),
             state: $("#selectState"),
             instagram: $("#inputInstagram"),
             facebook: $("#inputFacebook"),
